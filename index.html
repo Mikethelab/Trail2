@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Bubbles</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7c7c7c;
+            margin-bottom: 35px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .emoji-header {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .bubbles-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            min-height: 200px;
+        }
+
+        .bubble {
+            padding: 14px 26px;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, #fff 0%, #f8f9ff 100%);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 16px;
+            color: #4a4a4a;
+            user-select: none;
+            font-weight: 500;
+        }
+
+        .bubble:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            background: linear-gradient(135deg, #fff 0%, #f0f2ff 100%);
+        }
+
+        .bubble.selected {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #4a4a4a;
+            border-color: transparent;
+            box-shadow: 0 6px 20px rgba(168, 237, 234, 0.4);
+            font-weight: 600;
+        }
+
+        .regenerate-btn {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            border: 2px solid #e0e7ff;
+            color: #667eea;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.1);
+        }
+
+        .regenerate-btn:hover {
+            background: linear-gradient(135deg, #f0f2ff 0%, #e8ebff 100%);
+            border-color: #667eea;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .next-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: none;
+            color: #4a4a4a;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.4;
+            pointer-events: none;
+            box-shadow: 0 2px 10px rgba(168, 237, 234, 0.2);
+        }
+
+        .next-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .next-btn.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 237, 234, 0.4);
+        }
+
+        /* Second page styles */
+        .input-page {
+            display: none;
+        }
+
+        .input-page.active {
+            display: block;
+        }
+
+        .selected-emotion-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .emotion-label {
+            display: inline-block;
+            padding: 14px 28px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #4a4a4a;
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
+        }
+
+        .instruction {
+            text-align: center;
+            color: #7c7c7c;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e8ebff;
+            border-radius: 14px;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #a8edea;
+            box-shadow: 0 0 0 3px rgba(168, 237, 234, 0.1);
+        }
+
+        .text-input.correct {
+            border-color: #86efac;
+            background: #f0fdf4;
+        }
+
+        .text-input.incorrect {
+            border-color: #fca5a5;
+            background: #fef2f2;
+        }
+
+        .feedback {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 15px;
+            min-height: 20px;
+            font-weight: 500;
+        }
+
+        .feedback.correct {
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .feedback.incorrect {
+            color: #ef4444;
+        }
+
+        .back-btn {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            border: 2px solid #e8ebff;
+            color: #7c7c7c;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .back-btn:hover {
+            border-color: #a8edea;
+            color: #4a4a4a;
+            background: #f8fffe;
+        }
+
+        .selection-page {
+            display: block;
+        }
+
+        .selection-page.hidden {
+            display: none;
+        }
+
+        /* Third page - Breathing Exercise */
+        .breathing-page {
+            display: none;
+            text-align: center;
+        }
+
+        .breathing-page.active {
+            display: block;
+        }
+
+        .breathing-title {
+            font-size: 24px;
+            color: #4a4a4a;
+            margin-bottom: 45px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .countdown-circle {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 50px rgba(168, 237, 234, 0.3);
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 15px 50px rgba(168, 237, 234, 0.3);
+            }
+            50% {
+                transform: scale(1.08);
+                box-shadow: 0 20px 60px rgba(168, 237, 234, 0.4);
+            }
+        }
+
+        .countdown-number {
+            font-size: 80px;
+            color: #4a4a4a;
+            font-weight: 700;
+            letter-spacing: -2px;
+        }
+
+        .breathing-instruction {
+            color: #7c7c7c;
+            font-size: 17px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* Fourth page - Check-in */
+        .checkin-page {
+            display: none;
+            text-align: center;
+        }
+
+        .checkin-page.active {
+            display: block;
+        }
+
+        .checkin-title {
+            font-size: 24px;
+            color: #4a4a4a;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .checkin-subtitle {
+            color: #7c7c7c;
+            font-size: 15px;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .checkin-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .feel-better-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #86efac 0%, #6ee7b7 100%);
+            border: none;
+            color: #166534;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(134, 239, 172, 0.3);
+        }
+
+        .feel-better-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(134, 239, 172, 0.4);
+        }
+
+        .still-no-btn {
+            width: 100%;
+            padding: 18px;
+            background: white;
+            border: 2px solid #e8ebff;
+            color: #7c7c7c;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .still-no-btn:hover {
+            border-color: #fed6e3;
+            color: #4a4a4a;
+            background: #fef8fb;
+        }
+
+        /* Fifth page - Congratulations */
+        .congrats-page {
+            display: none;
+            text-align: center;
+        }
+
+        .congrats-page.active {
+            display: block;
+        }
+
+        .congrats-graphic {
+            font-size: 90px;
+            margin-bottom: 25px;
+            animation: celebrate 1.2s ease-in-out;
+        }
+
+        @keyframes celebrate {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                transform: scale(1.3) rotate(-15deg);
+            }
+            75% {
+                transform: scale(1.3) rotate(15deg);
+            }
+        }
+
+        .congrats-title {
+            font-size: 32px;
+            background: linear-gradient(135deg, #86efac 0%, #6ee7b7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
+        }
+
+        .congrats-message {
+            color: #7c7c7c;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .restart-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: none;
+            color: #4a4a4a;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(168, 237, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Selection Page -->
+        <div class="selection-page" id="selectionPage">
+            <div class="emoji-header">✨</div>
+            <h1>How are you feeling?</h1>
+            <p class="subtitle">Select one or more emotions that match your current state</p>
+            
+            <div class="bubbles-container" id="bubblesContainer"></div>
+            
+            <button class="regenerate-btn" id="regenerateBtn">🔄 Regenerate Emotions</button>
+            <button class="next-btn" id="nextBtn">Continue →</button>
+        </div>
+
+        <!-- Input Page -->
+        <div class="input-page" id="inputPage">
+            <h1>Express Your Emotion</h1>
+            <p class="subtitle">Type the emotion word to acknowledge how you feel</p>
+            
+            <div class="selected-emotion-display" id="emotionDisplay"></div>
+            
+            <p class="instruction">Type the emotion label above:</p>
+            <input type="text" class="text-input" id="emotionInput" placeholder="Type here...">
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <button class="back-btn" id="backBtn">← Back to Selection</button>
+        </div>
+
+        <!-- Breathing Page -->
+        <div class="breathing-page" id="breathingPage">
+            <h2 class="breathing-title">Let's take a deep breath for 30 seconds</h2>
+            
+            <div class="countdown-circle">
+                <div class="countdown-number" id="countdownNumber">30</div>
+            </div>
+            
+            <p class="breathing-instruction">Breathe slowly and deeply...</p>
+        </div>
+
+        <!-- Check-in Page -->
+        <div class="checkin-page" id="checkinPage">
+            <h2 class="checkin-title">How are you feeling now?</h2>
+            <p class="checkin-subtitle">After taking a moment to breathe and acknowledge your emotions</p>
+            
+            <div class="checkin-buttons">
+                <button class="feel-better-btn" id="feelBetterBtn">😊 Feel Better</button>
+                <button class="still-no-btn" id="stillNoBtn">😔 Still No</button>
+            </div>
+        </div>
+
+        <!-- Congratulations Page -->
+        <div class="congrats-page" id="congratsPage">
+            <div class="congrats-graphic">🎉</div>
+            <h2 class="congrats-title">Congratulations!</h2>
+            <p class="congrats-message">
+                You've taken an important step in acknowledging and processing your emotions. Remember, it's okay to feel what you feel. Your peace-of-mind is the most important thing!
+            </p>
+            <button class="restart-btn" id="restartBtn">Start Over</button>
+        </div>
+    </div>
+
+    <script>
+        const emotions = [
+            'Happy', 'Sad', 'Angry', 'Anxious', 'Excited', 'Calm', 'Frustrated',
+            'Grateful', 'Lonely', 'Confident', 'Overwhelmed', 'Peaceful', 'Nervous',
+            'Joyful', 'Tired', 'Hopeful', 'Confused', 'Proud', 'Ashamed', 'Content',
+            'Afraid', 'Energetic', 'Bored', 'Curious', 'Jealous', 'Relieved',
+            'Stressed', 'Loved', 'Disappointed', 'Motivated'
+        ];
+
+        let selectedEmotions = [];
+        let currentEmotionIndex = 0;
+
+        const bubblesContainer = document.getElementById('bubblesContainer');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const selectionPage = document.getElementById('selectionPage');
+        const inputPage = document.getElementById('inputPage');
+        const emotionDisplay = document.getElementById('emotionDisplay');
+        const emotionInput = document.getElementById('emotionInput');
+        const feedback = document.getElementById('feedback');
+        const backBtn = document.getElementById('backBtn');
+        const breathingPage = document.getElementById('breathingPage');
+        const countdownNumber = document.getElementById('countdownNumber');
+        const checkinPage = document.getElementById('checkinPage');
+        const feelBetterBtn = document.getElementById('feelBetterBtn');
+        const stillNoBtn = document.getElementById('stillNoBtn');
+        const congratsPage = document.getElementById('congratsPage');
+        const restartBtn = document.getElementById('restartBtn');
+
+        let countdownInterval = null;
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function generateBubbles() {
+            const shuffled = shuffleArray(emotions);
+            const selected = shuffled.slice(0, 8);
+            
+            bubblesContainer.innerHTML = '';
+            
+            selected.forEach(emotion => {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.textContent = emotion;
+                bubble.addEventListener('click', () => toggleBubble(bubble, emotion));
+                bubblesContainer.appendChild(bubble);
+            });
+        }
+
+        function toggleBubble(bubbleElement, emotion) {
+            if (bubbleElement.classList.contains('selected')) {
+                bubbleElement.classList.remove('selected');
+                selectedEmotions = selectedEmotions.filter(e => e !== emotion);
+            } else {
+                bubbleElement.classList.add('selected');
+                selectedEmotions.push(emotion);
+            }
+            
+            updateNextButton();
+        }
+
+        function updateNextButton() {
+            if (selectedEmotions.length > 0) {
+                nextBtn.classList.add('active');
+            } else {
+                nextBtn.classList.remove('active');
+            }
+        }
+
+        function showInputPage() {
+            if (selectedEmotions.length === 0) return;
+            
+            currentEmotionIndex = 0;
+            selectionPage.classList.add('hidden');
+            inputPage.classList.add('active');
+            
+            displayCurrentEmotion();
+        }
+
+        function displayCurrentEmotion() {
+            const emotion = selectedEmotions[currentEmotionIndex];
+            emotionDisplay.innerHTML = `<div class="emotion-label">${emotion}</div>`;
+            emotionInput.value = '';
+            emotionInput.className = 'text-input';
+            feedback.textContent = '';
+            feedback.className = 'feedback';
+            emotionInput.focus();
+        }
+
+        function checkInput() {
+            const userInput = emotionInput.value.trim();
+            const currentEmotion = selectedEmotions[currentEmotionIndex];
+            
+            if (userInput.toLowerCase() === currentEmotion.toLowerCase()) {
+                emotionInput.classList.remove('incorrect');
+                emotionInput.classList.add('correct');
+                feedback.textContent = '✓ Perfect! You\'ve acknowledged this emotion.';
+                feedback.className = 'feedback correct';
+                
+                setTimeout(() => {
+                    if (currentEmotionIndex < selectedEmotions.length - 1) {
+                        currentEmotionIndex++;
+                        displayCurrentEmotion();
+                    } else {
+                        // All emotions completed - go to breathing page
+                        showBreathingPage();
+                    }
+                }, 1500);
+            } else if (userInput.length > 0) {
+                emotionInput.classList.remove('correct');
+                emotionInput.classList.add('incorrect');
+                feedback.textContent = 'Not quite. Try typing the exact word shown above.';
+                feedback.className = 'feedback incorrect';
+            }
+        }
+
+        function showBreathingPage() {
+            inputPage.classList.remove('active');
+            breathingPage.classList.add('active');
+            startCountdown();
+        }
+
+        function startCountdown() {
+            let seconds = 30;
+            countdownNumber.textContent = seconds;
+            
+            countdownInterval = setInterval(() => {
+                seconds--;
+                countdownNumber.textContent = seconds;
+                
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    showCheckinPage();
+                }
+            }, 1000);
+        }
+
+        function showCheckinPage() {
+            breathingPage.classList.remove('active');
+            checkinPage.classList.add('active');
+        }
+
+        function showCongratsPage() {
+            checkinPage.classList.remove('active');
+            congratsPage.classList.add('active');
+        }
+
+        function returnToInputPage() {
+            checkinPage.classList.remove('active');
+            currentEmotionIndex = 0;
+            inputPage.classList.add('active');
+            displayCurrentEmotion();
+        }
+
+        function resetApp() {
+            // Clear any running countdown
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+            
+            selectedEmotions = [];
+            currentEmotionIndex = 0;
+            
+            // Hide all pages
+            selectionPage.classList.remove('hidden');
+            inputPage.classList.remove('active');
+            breathingPage.classList.remove('active');
+            checkinPage.classList.remove('active');
+            congratsPage.classList.remove('active');
+            
+            nextBtn.classList.remove('active');
+            generateBubbles();
+        }
+
+        regenerateBtn.addEventListener('click', generateBubbles);
+        nextBtn.addEventListener('click', showInputPage);
+        backBtn.addEventListener('click', resetApp);
+        emotionInput.addEventListener('input', checkInput);
+        feelBetterBtn.addEventListener('click', showCongratsPage);
+        stillNoBtn.addEventListener('click', returnToInputPage);
+        restartBtn.addEventListener('click', resetApp);
+
+        // Initialize
+        generateBubbles();
+    </script>
+</body>
+</html>
