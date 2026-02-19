@@ -60,12 +60,8 @@
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .bubbles-container {
@@ -73,7 +69,7 @@
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             min-height: 200px;
         }
 
@@ -103,6 +99,88 @@
             border-color: transparent;
             box-shadow: 0 6px 20px rgba(168, 237, 234, 0.4);
             font-weight: 600;
+        }
+
+        /* Custom emotion input on page 1 */
+        .custom-emotion-section {
+            margin-bottom: 20px;
+        }
+
+        .custom-emotion-label {
+            text-align: center;
+            color: #7c7c7c;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .custom-emotion-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .custom-emotion-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e8ebff;
+            border-radius: 50px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+            outline: none;
+        }
+
+        .custom-emotion-input:focus {
+            border-color: #a8edea;
+            box-shadow: 0 0 0 3px rgba(168, 237, 234, 0.15);
+        }
+
+        .add-emotion-btn {
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #4a4a4a;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .add-emotion-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.4);
+        }
+
+        .custom-added-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a4a4a;
+            margin: 4px;
+        }
+
+        .custom-added-tag .remove-tag {
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+            opacity: 0.6;
+        }
+
+        .custom-added-tag .remove-tag:hover { opacity: 1; }
+
+        .custom-added-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            min-height: 10px;
+            margin-bottom: 8px;
         }
 
         .regenerate-btn {
@@ -154,13 +232,8 @@
         }
 
         /* Second page styles */
-        .input-page {
-            display: none;
-        }
-
-        .input-page.active {
-            display: block;
-        }
+        .input-page { display: none; }
+        .input-page.active { display: block; }
 
         .selected-emotion-display {
             text-align: center;
@@ -222,14 +295,8 @@
             font-weight: 500;
         }
 
-        .feedback.correct {
-            color: #22c55e;
-            font-weight: 600;
-        }
-
-        .feedback.incorrect {
-            color: #ef4444;
-        }
+        .feedback.correct { color: #22c55e; font-weight: 600; }
+        .feedback.incorrect { color: #ef4444; }
 
         .back-btn {
             width: 100%;
@@ -251,23 +318,12 @@
             background: #f8fffe;
         }
 
-        .selection-page {
-            display: block;
-        }
-
-        .selection-page.hidden {
-            display: none;
-        }
+        .selection-page { display: block; }
+        .selection-page.hidden { display: none; }
 
         /* Third page - Breathing Exercise */
-        .breathing-page {
-            display: none;
-            text-align: center;
-        }
-
-        .breathing-page.active {
-            display: block;
-        }
+        .breathing-page { display: none; text-align: center; }
+        .breathing-page.active { display: block; }
 
         .breathing-title {
             font-size: 24px;
@@ -291,14 +347,8 @@
         }
 
         @keyframes breathe {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 15px 50px rgba(168, 237, 234, 0.3);
-            }
-            50% {
-                transform: scale(1.08);
-                box-shadow: 0 20px 60px rgba(168, 237, 234, 0.4);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 15px 50px rgba(168, 237, 234, 0.3); }
+            50% { transform: scale(1.08); box-shadow: 0 20px 60px rgba(168, 237, 234, 0.4); }
         }
 
         .countdown-number {
@@ -316,14 +366,8 @@
         }
 
         /* Fourth page - Check-in */
-        .checkin-page {
-            display: none;
-            text-align: center;
-        }
-
-        .checkin-page.active {
-            display: block;
-        }
+        .checkin-page { display: none; text-align: center; }
+        .checkin-page.active { display: block; }
 
         .checkin-title {
             font-size: 24px;
@@ -384,14 +428,8 @@
         }
 
         /* Fifth page - Congratulations */
-        .congrats-page {
-            display: none;
-            text-align: center;
-        }
-
-        .congrats-page.active {
-            display: block;
-        }
+        .congrats-page { display: none; text-align: center; }
+        .congrats-page.active { display: block; }
 
         .congrats-graphic {
             font-size: 90px;
@@ -400,15 +438,9 @@
         }
 
         @keyframes celebrate {
-            0%, 100% {
-                transform: scale(1) rotate(0deg);
-            }
-            25% {
-                transform: scale(1.3) rotate(-15deg);
-            }
-            75% {
-                transform: scale(1.3) rotate(15deg);
-            }
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.3) rotate(-15deg); }
+            75% { transform: scale(1.3) rotate(15deg); }
         }
 
         .congrats-title {
@@ -447,23 +479,249 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 25px rgba(168, 237, 234, 0.4);
         }
+
+        /* ===== Page 6 - Reflection Page ===== */
+        .reflect-page { display: none; }
+        .reflect-page.active { display: block; }
+
+        .reflect-title {
+            font-size: 22px;
+            color: #4a4a4a;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .reflect-subtitle {
+            color: #7c7c7c;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .reflect-textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 16px;
+            border: 2px solid #e8ebff;
+            border-radius: 14px;
+            font-size: 15px;
+            font-family: inherit;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: white;
+            line-height: 1.6;
+        }
+
+        .reflect-textarea:focus {
+            outline: none;
+            border-color: #a8edea;
+            box-shadow: 0 0 0 3px rgba(168, 237, 234, 0.1);
+        }
+
+        .char-counter {
+            text-align: right;
+            font-size: 13px;
+            color: #b0b0b0;
+            margin-top: 6px;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+
+        .char-counter.near-limit { color: #f59e0b; }
+        .char-counter.at-limit { color: #ef4444; font-weight: 600; }
+
+        .shout-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+            border: none;
+            color: white;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(192, 132, 252, 0.3);
+            letter-spacing: 0.3px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .shout-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .shout-btn.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(192, 132, 252, 0.45);
+        }
+
+        /* ===== Page 7 - Emotion Bubble + Intensity Slider ===== */
+        .intensity-page { display: none; text-align: center; }
+        .intensity-page.active { display: block; }
+
+        .intensity-title {
+            font-size: 22px;
+            color: #4a4a4a;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .intensity-subtitle {
+            color: #7c7c7c;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .emotion-bubbles-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 35px;
+        }
+
+        .emotion-bubble-display {
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #4a4a4a;
+            font-size: 17px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
+        }
+
+        .slider-section {
+            margin-bottom: 30px;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #7c7c7c;
+        }
+
+        .intensity-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #a8edea, #fed6e3);
+            outline: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .intensity-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #c084fc;
+            box-shadow: 0 2px 10px rgba(192, 132, 252, 0.4);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .intensity-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 16px rgba(192, 132, 252, 0.5);
+        }
+
+        .intensity-slider::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #c084fc;
+            box-shadow: 0 2px 10px rgba(192, 132, 252, 0.4);
+            cursor: pointer;
+        }
+
+        .intensity-value {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .intensity-description {
+            font-size: 14px;
+            color: #7c7c7c;
+            margin-bottom: 28px;
+            min-height: 20px;
+        }
+
+        .intensity-submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: none;
+            color: #4a4a4a;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
+        }
+
+        .intensity-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(168, 237, 234, 0.4);
+        }
+
+        .page-indicator {
+            text-align: center;
+            font-size: 12px;
+            color: #c0c0c0;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Selection Page -->
+
+        <!-- PAGE 1: Selection Page -->
         <div class="selection-page" id="selectionPage">
             <div class="emoji-header">✨</div>
             <h1>How are you feeling?</h1>
             <p class="subtitle">Select one or more emotions that match your current state</p>
             
             <div class="bubbles-container" id="bubblesContainer"></div>
+
+            <!-- Custom emotion input -->
+            <div class="custom-emotion-section">
+                <p class="custom-emotion-label">Can't find yours? Type it below 👇</p>
+                <div class="custom-emotion-row">
+                    <input type="text" class="custom-emotion-input" id="customEmotionInput"
+                           placeholder="e.g. Melancholic / เศร้า..." maxlength="40">
+                    <button class="add-emotion-btn" id="addEmotionBtn">+ Add</button>
+                </div>
+            </div>
+
+            <div class="custom-added-container" id="customAddedContainer"></div>
             
             <button class="regenerate-btn" id="regenerateBtn">🔄 Regenerate Emotions</button>
             <button class="next-btn" id="nextBtn">Continue →</button>
+            <p class="page-indicator">PAGE 1 OF 7</p>
         </div>
 
-        <!-- Input Page -->
+        <!-- PAGE 2: Input Page -->
         <div class="input-page" id="inputPage">
             <h1>Express Your Emotion</h1>
             <p class="subtitle">Type the emotion word to acknowledge how you feel</p>
@@ -476,9 +734,10 @@
             <div class="feedback" id="feedback"></div>
             
             <button class="back-btn" id="backBtn">← Back to Selection</button>
+            <p class="page-indicator">PAGE 2 OF 7</p>
         </div>
 
-        <!-- Breathing Page -->
+        <!-- PAGE 3: Breathing Page -->
         <div class="breathing-page" id="breathingPage">
             <h2 class="breathing-title">Let's take a deep breath for 30 seconds</h2>
             
@@ -487,9 +746,10 @@
             </div>
             
             <p class="breathing-instruction">Breathe slowly and deeply...</p>
+            <p class="page-indicator">PAGE 3 OF 7</p>
         </div>
 
-        <!-- Check-in Page -->
+        <!-- PAGE 4: Check-in Page -->
         <div class="checkin-page" id="checkinPage">
             <h2 class="checkin-title">How are you feeling now?</h2>
             <p class="checkin-subtitle">After taking a moment to breathe and acknowledge your emotions</p>
@@ -498,9 +758,10 @@
                 <button class="feel-better-btn" id="feelBetterBtn">😊 Feel Better</button>
                 <button class="still-no-btn" id="stillNoBtn">😔 Still No</button>
             </div>
+            <p class="page-indicator">PAGE 4 OF 7</p>
         </div>
 
-        <!-- Congratulations Page -->
+        <!-- PAGE 5: Congratulations Page -->
         <div class="congrats-page" id="congratsPage">
             <div class="congrats-graphic">🎉</div>
             <h2 class="congrats-title">Congratulations!</h2>
@@ -508,7 +769,47 @@
                 You've taken an important step in acknowledging and processing your emotions. Remember, it's okay to feel what you feel. Your peace-of-mind is the most important thing!
             </p>
             <button class="restart-btn" id="restartBtn">Start Over</button>
+            <p class="page-indicator">PAGE 5 OF 7</p>
         </div>
+
+        <!-- PAGE 6: Reflection Page (Still No path) -->
+        <div class="reflect-page" id="reflectPage">
+            <div class="emoji-header" style="font-size:36px; margin-bottom:12px;">💭</div>
+            <h2 class="reflect-title">Let's reflect for a moment</h2>
+            <p class="reflect-subtitle">
+                If you were <strong>NOT</strong> feeling this emotion, what would you do differently right now?
+                Write freely — this is just for you.
+            </p>
+
+            <textarea class="reflect-textarea" id="reflectTextarea"
+                      placeholder="e.g. I would take a walk outside, call a friend, focus on my work..." maxlength="300"></textarea>
+            <div class="char-counter" id="charCounter">0 / 300</div>
+
+            <button class="shout-btn" id="shoutBtn">📢 Shout Out!</button>
+            <p class="page-indicator">PAGE 6 OF 7</p>
+        </div>
+
+        <!-- PAGE 7: Emotion Bubble + Intensity Slider -->
+        <div class="intensity-page" id="intensityPage">
+            <h2 class="intensity-title">How intense is this feeling?</h2>
+            <p class="intensity-subtitle">Slide to show how strongly you feel this right now</p>
+
+            <div class="emotion-bubbles-display" id="intensityBubblesDisplay"></div>
+
+            <div class="slider-section">
+                <div class="slider-label">
+                    <span>😌 Very Low</span>
+                    <span>😤 Very High</span>
+                </div>
+                <input type="range" class="intensity-slider" id="intensitySlider" min="1" max="10" value="5">
+                <div class="intensity-value" id="intensityValue">5</div>
+                <div class="intensity-description" id="intensityDesc">Moderate intensity</div>
+            </div>
+
+            <button class="intensity-submit-btn" id="intensitySubmitBtn">Submit & Breathe →</button>
+            <p class="page-indicator">PAGE 7 OF 7</p>
+        </div>
+
     </div>
 
     <script>
@@ -520,28 +821,63 @@
             'Stressed', 'Loved', 'Disappointed', 'Motivated'
         ];
 
+        const intensityLabels = {
+            1: 'Barely noticeable',
+            2: 'Very mild',
+            3: 'Mild',
+            4: 'Somewhat present',
+            5: 'Moderate intensity',
+            6: 'Noticeably strong',
+            7: 'Quite intense',
+            8: 'Very intense',
+            9: 'Overwhelming',
+            10: 'Extremely intense'
+        };
+
         let selectedEmotions = [];
+        let customEmotions = [];
         let currentEmotionIndex = 0;
+        let countdownInterval = null;
+
+        // Page elements
+        const selectionPage = document.getElementById('selectionPage');
+        const inputPage = document.getElementById('inputPage');
+        const breathingPage = document.getElementById('breathingPage');
+        const checkinPage = document.getElementById('checkinPage');
+        const congratsPage = document.getElementById('congratsPage');
+        const reflectPage = document.getElementById('reflectPage');
+        const intensityPage = document.getElementById('intensityPage');
 
         const bubblesContainer = document.getElementById('bubblesContainer');
         const regenerateBtn = document.getElementById('regenerateBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const selectionPage = document.getElementById('selectionPage');
-        const inputPage = document.getElementById('inputPage');
+        const customEmotionInput = document.getElementById('customEmotionInput');
+        const addEmotionBtn = document.getElementById('addEmotionBtn');
+        const customAddedContainer = document.getElementById('customAddedContainer');
+
         const emotionDisplay = document.getElementById('emotionDisplay');
         const emotionInput = document.getElementById('emotionInput');
         const feedback = document.getElementById('feedback');
         const backBtn = document.getElementById('backBtn');
-        const breathingPage = document.getElementById('breathingPage');
         const countdownNumber = document.getElementById('countdownNumber');
-        const checkinPage = document.getElementById('checkinPage');
+
         const feelBetterBtn = document.getElementById('feelBetterBtn');
         const stillNoBtn = document.getElementById('stillNoBtn');
-        const congratsPage = document.getElementById('congratsPage');
         const restartBtn = document.getElementById('restartBtn');
 
-        let countdownInterval = null;
+        const reflectTextarea = document.getElementById('reflectTextarea');
+        const charCounter = document.getElementById('charCounter');
+        const shoutBtn = document.getElementById('shoutBtn');
 
+        const intensityBubblesDisplay = document.getElementById('intensityBubblesDisplay');
+        const intensitySlider = document.getElementById('intensitySlider');
+        const intensityValue = document.getElementById('intensityValue');
+        const intensityDesc = document.getElementById('intensityDesc');
+        const intensitySubmitBtn = document.getElementById('intensitySubmitBtn');
+
+        // =====================
+        // PAGE 1 LOGIC
+        // =====================
         function shuffleArray(array) {
             const newArray = [...array];
             for (let i = newArray.length - 1; i > 0; i--) {
@@ -554,13 +890,14 @@
         function generateBubbles() {
             const shuffled = shuffleArray(emotions);
             const selected = shuffled.slice(0, 8);
-            
+
             bubblesContainer.innerHTML = '';
-            
+
             selected.forEach(emotion => {
                 const bubble = document.createElement('div');
                 bubble.className = 'bubble';
                 bubble.textContent = emotion;
+                if (selectedEmotions.includes(emotion)) bubble.classList.add('selected');
                 bubble.addEventListener('click', () => toggleBubble(bubble, emotion));
                 bubblesContainer.appendChild(bubble);
             });
@@ -574,30 +911,71 @@
                 bubbleElement.classList.add('selected');
                 selectedEmotions.push(emotion);
             }
-            
             updateNextButton();
         }
 
         function updateNextButton() {
-            if (selectedEmotions.length > 0) {
-                nextBtn.classList.add('active');
-            } else {
-                nextBtn.classList.remove('active');
+            const total = selectedEmotions.length + customEmotions.length;
+            nextBtn.classList.toggle('active', total > 0);
+        }
+
+        // Custom emotion input
+        function addCustomEmotion() {
+            const val = customEmotionInput.value.trim();
+            if (!val) return;
+            if (customEmotions.includes(val) || selectedEmotions.includes(val)) {
+                customEmotionInput.value = '';
+                return;
             }
+
+            customEmotions.push(val);
+            renderCustomTags();
+            customEmotionInput.value = '';
+            updateNextButton();
+        }
+
+        function renderCustomTags() {
+            customAddedContainer.innerHTML = '';
+            customEmotions.forEach((emo, idx) => {
+                const tag = document.createElement('span');
+                tag.className = 'custom-added-tag';
+                tag.innerHTML = `${emo} <span class="remove-tag" data-idx="${idx}">✕</span>`;
+                tag.querySelector('.remove-tag').addEventListener('click', () => {
+                    customEmotions.splice(idx, 1);
+                    renderCustomTags();
+                    updateNextButton();
+                });
+                customAddedContainer.appendChild(tag);
+            });
+        }
+
+        addEmotionBtn.addEventListener('click', addCustomEmotion);
+        customEmotionInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') addCustomEmotion();
+        });
+
+        regenerateBtn.addEventListener('click', generateBubbles);
+        nextBtn.addEventListener('click', showInputPage);
+
+        // =====================
+        // PAGE 2 LOGIC
+        // =====================
+        function getAllSelectedEmotions() {
+            return [...selectedEmotions, ...customEmotions];
         }
 
         function showInputPage() {
-            if (selectedEmotions.length === 0) return;
-            
+            const all = getAllSelectedEmotions();
+            if (all.length === 0) return;
             currentEmotionIndex = 0;
             selectionPage.classList.add('hidden');
             inputPage.classList.add('active');
-            
-            displayCurrentEmotion();
+            displayCurrentEmotion(all);
         }
 
-        function displayCurrentEmotion() {
-            const emotion = selectedEmotions[currentEmotionIndex];
+        function displayCurrentEmotion(all) {
+            const allEmotions = all || getAllSelectedEmotions();
+            const emotion = allEmotions[currentEmotionIndex];
             emotionDisplay.innerHTML = `<div class="emotion-label">${emotion}</div>`;
             emotionInput.value = '';
             emotionInput.className = 'text-input';
@@ -608,20 +986,20 @@
 
         function checkInput() {
             const userInput = emotionInput.value.trim();
-            const currentEmotion = selectedEmotions[currentEmotionIndex];
-            
+            const allEmotions = getAllSelectedEmotions();
+            const currentEmotion = allEmotions[currentEmotionIndex];
+
             if (userInput.toLowerCase() === currentEmotion.toLowerCase()) {
                 emotionInput.classList.remove('incorrect');
                 emotionInput.classList.add('correct');
                 feedback.textContent = '✓ Perfect! You\'ve acknowledged this emotion.';
                 feedback.className = 'feedback correct';
-                
+
                 setTimeout(() => {
-                    if (currentEmotionIndex < selectedEmotions.length - 1) {
+                    if (currentEmotionIndex < allEmotions.length - 1) {
                         currentEmotionIndex++;
-                        displayCurrentEmotion();
+                        displayCurrentEmotion(allEmotions);
                     } else {
-                        // All emotions completed - go to breathing page
                         showBreathingPage();
                     }
                 }, 1500);
@@ -633,6 +1011,12 @@
             }
         }
 
+        emotionInput.addEventListener('input', checkInput);
+        backBtn.addEventListener('click', resetApp);
+
+        // =====================
+        // PAGE 3 LOGIC
+        // =====================
         function showBreathingPage() {
             inputPage.classList.remove('active');
             breathingPage.classList.add('active');
@@ -640,67 +1024,130 @@
         }
 
         function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
             let seconds = 30;
             countdownNumber.textContent = seconds;
-            
+
             countdownInterval = setInterval(() => {
                 seconds--;
                 countdownNumber.textContent = seconds;
-                
                 if (seconds <= 0) {
                     clearInterval(countdownInterval);
+                    countdownInterval = null;
                     showCheckinPage();
                 }
             }, 1000);
         }
 
+        // =====================
+        // PAGE 4 LOGIC
+        // =====================
         function showCheckinPage() {
             breathingPage.classList.remove('active');
             checkinPage.classList.add('active');
         }
 
-        function showCongratsPage() {
+        feelBetterBtn.addEventListener('click', () => {
             checkinPage.classList.remove('active');
             congratsPage.classList.add('active');
-        }
+        });
 
-        function returnToInputPage() {
+        stillNoBtn.addEventListener('click', () => {
             checkinPage.classList.remove('active');
-            currentEmotionIndex = 0;
-            inputPage.classList.add('active');
-            displayCurrentEmotion();
+            showReflectPage();
+        });
+
+        // =====================
+        // PAGE 5: Congrats
+        // =====================
+        restartBtn.addEventListener('click', resetApp);
+
+        // =====================
+        // PAGE 6 LOGIC: Reflection
+        // =====================
+        function showReflectPage() {
+            reflectTextarea.value = '';
+            charCounter.textContent = '0 / 300';
+            charCounter.className = 'char-counter';
+            shoutBtn.classList.remove('active');
+            reflectPage.classList.add('active');
         }
 
+        reflectTextarea.addEventListener('input', () => {
+            const len = reflectTextarea.value.length;
+            charCounter.textContent = `${len} / 300`;
+            charCounter.className = 'char-counter' +
+                (len >= 300 ? ' at-limit' : len >= 250 ? ' near-limit' : '');
+            shoutBtn.classList.toggle('active', len > 0);
+        });
+
+        shoutBtn.addEventListener('click', () => {
+            if (reflectTextarea.value.trim().length === 0) return;
+            reflectPage.classList.remove('active');
+            showIntensityPage();
+        });
+
+        // =====================
+        // PAGE 7 LOGIC: Intensity Slider
+        // =====================
+        function showIntensityPage() {
+            // Show all selected emotions as bubbles
+            intensityBubblesDisplay.innerHTML = '';
+            getAllSelectedEmotions().forEach(emo => {
+                const bubble = document.createElement('div');
+                bubble.className = 'emotion-bubble-display';
+                bubble.textContent = emo;
+                intensityBubblesDisplay.appendChild(bubble);
+            });
+
+            // Reset slider
+            intensitySlider.value = 5;
+            intensityValue.textContent = '5';
+            intensityDesc.textContent = intensityLabels[5];
+
+            intensityPage.classList.add('active');
+        }
+
+        intensitySlider.addEventListener('input', () => {
+            const val = parseInt(intensitySlider.value);
+            intensityValue.textContent = val;
+            intensityDesc.textContent = intensityLabels[val];
+        });
+
+        intensitySubmitBtn.addEventListener('click', () => {
+            intensityPage.classList.remove('active');
+            // Go to Page 3 (breathing countdown)
+            breathingPage.classList.add('active');
+            startCountdown();
+        });
+
+        // =====================
+        // RESET
+        // =====================
         function resetApp() {
-            // Clear any running countdown
             if (countdownInterval) {
                 clearInterval(countdownInterval);
                 countdownInterval = null;
             }
-            
+
             selectedEmotions = [];
+            customEmotions = [];
             currentEmotionIndex = 0;
-            
-            // Hide all pages
+
             selectionPage.classList.remove('hidden');
             inputPage.classList.remove('active');
             breathingPage.classList.remove('active');
             checkinPage.classList.remove('active');
             congratsPage.classList.remove('active');
-            
+            reflectPage.classList.remove('active');
+            intensityPage.classList.remove('active');
+
+            customAddedContainer.innerHTML = '';
             nextBtn.classList.remove('active');
             generateBubbles();
         }
 
-        regenerateBtn.addEventListener('click', generateBubbles);
-        nextBtn.addEventListener('click', showInputPage);
-        backBtn.addEventListener('click', resetApp);
-        emotionInput.addEventListener('input', checkInput);
-        feelBetterBtn.addEventListener('click', showCongratsPage);
-        stillNoBtn.addEventListener('click', returnToInputPage);
-        restartBtn.addEventListener('click', resetApp);
-
-        // Initialize
+        // Init
         generateBubbles();
     </script>
 </body>
