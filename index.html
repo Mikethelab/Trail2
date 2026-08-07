@@ -14,17 +14,25 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background-attachment: fixed;
             min-height: 100vh;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
         }
+
+        .app-wrap {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;   /* centers vertically without clipping tall content */
+        }
+
+        .app-wrap.wide { max-width: 720px; }
 
         .container {
             width: 100%;
-            max-width: 500px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 24px;
@@ -64,6 +72,145 @@
             50% { transform: translateY(-10px); }
         }
 
+        /* =====================================================
+           TOP BAR (visible once signed in)
+           ===================================================== */
+        .topbar {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 8px 10px 8px 14px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .topbar.active { display: flex; }
+
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .avatar {
+            width: 30px;
+            height: 30px;
+            flex: 0 0 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c084fc 0%, #f472b6 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+        }
+
+        .topbar-email {
+            font-size: 13px;
+            color: #6b6b6b;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 6px;
+            flex: 0 0 auto;
+        }
+
+        .topbar-btn {
+            padding: 8px 14px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #4a4a4a;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .topbar-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(168, 237, 234, 0.5); }
+        .topbar-btn.ghost { background: transparent; color: #a0a0a0; }
+        .topbar-btn.ghost:hover { color: #ef4444; box-shadow: none; }
+
+        /* =====================================================
+           AUTH PAGE
+           ===================================================== */
+        .auth-page { display: none; }
+        .auth-page.active { display: block; }
+
+        .auth-tabs {
+            display: flex;
+            gap: 6px;
+            background: #f2f4ff;
+            padding: 5px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 11px;
+            border: none;
+            border-radius: 50px;
+            background: transparent;
+            color: #9090a0;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: #4a4a4a;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        .field-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #8a8a9a;
+            margin-bottom: 7px;
+            margin-left: 4px;
+        }
+
+        .auth-error {
+            color: #ef4444;
+            font-size: 14px;
+            text-align: center;
+            min-height: 20px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .auth-error.ok { color: #22c55e; }
+
+        .auth-note {
+            font-size: 12px;
+            color: #a8a8b5;
+            text-align: center;
+            line-height: 1.6;
+            margin-top: 18px;
+        }
+
+        /* =====================================================
+           PAGE 1: bubbles
+           ===================================================== */
         .bubbles-container {
             display: flex;
             flex-wrap: wrap;
@@ -101,10 +248,7 @@
             font-weight: 600;
         }
 
-        /* Custom emotion input on page 1 */
-        .custom-emotion-section {
-            margin-bottom: 20px;
-        }
+        .custom-emotion-section { margin-bottom: 20px; }
 
         .custom-emotion-label {
             text-align: center;
@@ -113,10 +257,7 @@
             margin-bottom: 10px;
         }
 
-        .custom-emotion-row {
-            display: flex;
-            gap: 8px;
-        }
+        .custom-emotion-row { display: flex; gap: 8px; }
 
         .custom-emotion-input {
             flex: 1;
@@ -128,6 +269,7 @@
             transition: all 0.3s ease;
             background: white;
             outline: none;
+            min-width: 0;
         }
 
         .custom-emotion-input:focus {
@@ -143,6 +285,7 @@
             color: #4a4a4a;
             font-size: 15px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             white-space: nowrap;
@@ -192,6 +335,7 @@
             border-radius: 14px;
             font-size: 16px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 12px;
@@ -214,6 +358,7 @@
             border-radius: 14px;
             font-size: 16px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             opacity: 0.4;
@@ -221,10 +366,7 @@
             box-shadow: 0 2px 10px rgba(168, 237, 234, 0.2);
         }
 
-        .next-btn.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .next-btn.active { opacity: 1; pointer-events: auto; }
 
         .next-btn.active:hover {
             transform: translateY(-2px);
@@ -235,10 +377,7 @@
         .input-page { display: none; }
         .input-page.active { display: block; }
 
-        .selected-emotion-display {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        .selected-emotion-display { text-align: center; margin-bottom: 30px; }
 
         .emotion-label {
             display: inline-block;
@@ -277,15 +416,8 @@
             box-shadow: 0 0 0 3px rgba(168, 237, 234, 0.1);
         }
 
-        .text-input.correct {
-            border-color: #86efac;
-            background: #f0fdf4;
-        }
-
-        .text-input.incorrect {
-            border-color: #fca5a5;
-            background: #fef2f2;
-        }
+        .text-input.correct { border-color: #86efac; background: #f0fdf4; }
+        .text-input.incorrect { border-color: #fca5a5; background: #fef2f2; }
 
         .feedback {
             text-align: center;
@@ -307,6 +439,7 @@
             border-radius: 14px;
             font-size: 16px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 15px;
@@ -318,8 +451,8 @@
             background: #f8fffe;
         }
 
-        .selection-page { display: block; }
-        .selection-page.hidden { display: none; }
+        .selection-page { display: none; }
+        .selection-page.active { display: block; }
 
         /* Third page - Breathing Exercise */
         .breathing-page { display: none; text-align: center; }
@@ -383,11 +516,7 @@
             line-height: 1.5;
         }
 
-        .checkin-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .checkin-buttons { display: flex; flex-direction: column; gap: 12px; }
 
         .feel-better-btn {
             width: 100%;
@@ -398,6 +527,7 @@
             border-radius: 14px;
             font-size: 18px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(134, 239, 172, 0.3);
@@ -417,6 +547,7 @@
             border-radius: 14px;
             font-size: 18px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -470,6 +601,7 @@
             border-radius: 14px;
             font-size: 16px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
@@ -542,6 +674,7 @@
             border-radius: 14px;
             font-size: 17px;
             font-weight: 700;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(192, 132, 252, 0.3);
@@ -550,10 +683,7 @@
             pointer-events: none;
         }
 
-        .shout-btn.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .shout-btn.active { opacity: 1; pointer-events: auto; }
 
         .shout-btn.active:hover {
             transform: translateY(-2px);
@@ -572,11 +702,7 @@
             line-height: 1.4;
         }
 
-        .intensity-subtitle {
-            color: #7c7c7c;
-            font-size: 14px;
-            margin-bottom: 28px;
-        }
+        .intensity-subtitle { color: #7c7c7c; font-size: 14px; margin-bottom: 28px; }
 
         .emotion-bubbles-display {
             display: flex;
@@ -596,9 +722,7 @@
             box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
         }
 
-        .slider-section {
-            margin-bottom: 30px;
-        }
+        .slider-section { margin-bottom: 30px; }
 
         .slider-label {
             display: flex;
@@ -674,6 +798,7 @@
             border-radius: 14px;
             font-size: 16px;
             font-weight: 600;
+            font-family: inherit;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(168, 237, 234, 0.3);
@@ -691,69 +816,464 @@
             margin-top: 20px;
             letter-spacing: 1px;
         }
+
+        .saved-toast {
+            text-align: center;
+            font-size: 13px;
+            color: #22c55e;
+            font-weight: 600;
+            min-height: 18px;
+            margin-top: 10px;
+        }
+
+        /* =====================================================
+           DASHBOARD
+           ===================================================== */
+        .dash-page { display: none; }
+        .dash-page.active { display: block; }
+
+        .period-tabs {
+            display: flex;
+            gap: 6px;
+            background: #f2f4ff;
+            padding: 5px;
+            border-radius: 50px;
+            margin-bottom: 22px;
+        }
+
+        .period-tab {
+            flex: 1;
+            padding: 11px 8px;
+            border: none;
+            border-radius: 50px;
+            background: transparent;
+            color: #9090a0;
+            font-size: 14px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .period-tab.active {
+            background: white;
+            color: #4a4a4a;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+        }
+
+        /* Key-insights bubble */
+        .insight-bubble {
+            position: relative;
+            background: linear-gradient(135deg, #eef2ff 0%, #fdf2f8 100%);
+            border: 2px solid #e6e9ff;
+            border-radius: 26px;
+            padding: 22px 24px;
+            margin-bottom: 22px;
+        }
+
+        .insight-bubble::after {
+            content: '';
+            position: absolute;
+            left: 40px;
+            bottom: -12px;
+            width: 22px;
+            height: 22px;
+            background: #fdf2f8;
+            border-right: 2px solid #e6e9ff;
+            border-bottom: 2px solid #e6e9ff;
+            transform: rotate(45deg);
+            border-bottom-right-radius: 6px;
+        }
+
+        .insight-bubble-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #4a4a4a;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .insight-list { list-style: none; }
+
+        .insight-list li {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: #5a5a68;
+            padding: 9px 0;
+            border-top: 1px solid rgba(102, 126, 234, 0.08);
+        }
+
+        .insight-list li:first-child { border-top: none; padding-top: 0; }
+        .insight-list li strong { color: #4a4a4a; font-weight: 700; }
+        .insight-icon { flex: 0 0 auto; font-size: 16px; line-height: 1.5; }
+
+        .insight-takeaway {
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed rgba(102, 126, 234, 0.25);
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: #7c7c8a;
+            font-style: italic;
+        }
+
+        /* Stat tiles */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .stat-tile {
+            background: white;
+            border: 2px solid #eef0ff;
+            border-radius: 16px;
+            padding: 14px 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #4a4a4a;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #a0a0b0;
+            margin-top: 4px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        /* Cards */
+        .dash-card {
+            background: white;
+            border: 2px solid #eef0ff;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 18px;
+        }
+
+        .dash-card h3 {
+            font-size: 15px;
+            color: #4a4a4a;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .dash-card .card-hint {
+            font-size: 12.5px;
+            color: #a8a8b8;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        /* Frequency bars */
+        .freq-row { margin-bottom: 16px; }
+        .freq-row:last-child { margin-bottom: 0; }
+
+        .freq-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+        }
+
+        .freq-name { font-size: 14.5px; font-weight: 600; color: #4a4a4a; }
+
+        .freq-count {
+            font-size: 13px;
+            font-weight: 700;
+            color: #7c7c8a;
+        }
+
+        .freq-track {
+            height: 12px;
+            border-radius: 10px;
+            background: #f3f4fb;
+            overflow: hidden;
+        }
+
+        .freq-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Valence colours are deliberately equal in weight — no colour here means
+           "good" or "bad". Unpleasant feelings get a calm periwinkle, never red. */
+        .freq-fill.pos { background: linear-gradient(90deg, #a7f3d0 0%, #34d399 100%); }
+        .freq-fill.neg { background: linear-gradient(90deg, #c7d2fe 0%, #818cf8 100%); }
+        .freq-fill.neu { background: linear-gradient(90deg, #e2e8f0 0%, #94a3b8 100%); }
+
+        .freq-meta {
+            font-size: 12px;
+            color: #a8a8b8;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+
+        /* Time chart */
+        .time-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 130px;
+            padding-top: 10px;
+        }
+
+        .tc-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            min-width: 0;
+        }
+
+        .tc-bar-wrap {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .tc-bar {
+            width: 82%;
+            max-width: 30px;
+            min-height: 3px;
+            border-radius: 6px 6px 3px 3px;
+            background: linear-gradient(180deg, #c084fc 0%, #f472b6 100%);
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tc-bar.empty { background: #f0f1f8; }
+
+        .tc-num {
+            font-size: 10px;
+            color: #9090a0;
+            font-weight: 700;
+            margin-bottom: 3px;
+            height: 13px;
+        }
+
+        .tc-label {
+            font-size: 10px;
+            color: #b0b0c0;
+            margin-top: 7px;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 600;
+        }
+
+        /* Balance bar */
+        .balance-bar {
+            display: flex;
+            height: 26px;
+            border-radius: 50px;
+            overflow: hidden;
+            background: #f3f4fb;
+            margin-bottom: 14px;
+        }
+
+        .balance-seg {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            transition: width 0.5s ease;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .balance-seg.pos { background: linear-gradient(90deg, #6ee7b7, #34d399); }
+        .balance-seg.neg { background: linear-gradient(90deg, #a5b4fc, #818cf8); }
+        .balance-seg.neu { background: linear-gradient(90deg, #cbd5e1, #94a3b8); }
+
+        .balance-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            font-size: 12.5px;
+            color: #7c7c8a;
+        }
+
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+
+        .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .legend-dot.pos { background: #34d399; }
+        .legend-dot.neg { background: #818cf8; }
+        .legend-dot.neu { background: #94a3b8; }
+
+        /* Empty state */
+        .dash-empty { text-align: center; padding: 30px 10px 20px; }
+        .dash-empty .empty-emoji { font-size: 52px; margin-bottom: 16px; }
+
+        .dash-empty p {
+            color: #9090a0;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .link-btn {
+            background: none;
+            border: none;
+            color: #a78bfa;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 6px;
+        }
+
+        .link-btn:hover { color: #8b5cf6; }
+        .link-btn.danger { color: #cbb5c5; }
+        .link-btn.danger:hover { color: #ef4444; }
+
+        .dash-footer {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 560px) {
+            body { padding: 12px; }
+            .container { padding: 24px 20px; }
+            .stat-row { grid-template-columns: repeat(2, 1fr); }
+            .topbar-btn { padding: 8px 11px; font-size: 12px; }
+            .topbar-email { display: none; }
+        }
     </style>
 </head>
 <body>
+<div class="app-wrap" id="appWrap">
+
+    <!-- ============ TOP BAR ============ -->
+    <div class="topbar" id="topbar">
+        <div class="topbar-user">
+            <span class="avatar" id="avatarInitial">?</span>
+            <span class="topbar-email" id="topbarEmail"></span>
+        </div>
+        <div class="topbar-actions">
+            <button class="topbar-btn" id="navCheckin">Check-in</button>
+            <button class="topbar-btn" id="navDash">Dashboard</button>
+            <button class="topbar-btn ghost" id="signOutBtn">Sign out</button>
+        </div>
+    </div>
+
     <div class="container">
 
-        <!-- PAGE 1: Selection Page -->
+        <!-- ============ PAGE 0: AUTH ============ -->
+        <div class="auth-page active" id="authPage">
+            <div class="emoji-header">🫧</div>
+            <h1>Emotion Bubbles</h1>
+            <p class="subtitle">Notice what you feel — then see how often you actually feel it.</p>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabSignin" data-mode="signin">Sign in</button>
+                <button class="auth-tab" id="tabSignup" data-mode="signup">Sign up</button>
+            </div>
+
+            <form id="authForm" autocomplete="on">
+                <label class="field-label" for="authEmail">Email</label>
+                <input type="email" id="authEmail" class="text-input" placeholder="you@example.com" autocomplete="email">
+
+                <label class="field-label" for="authPassword">Password</label>
+                <input type="password" id="authPassword" class="text-input" placeholder="At least 8 characters" autocomplete="current-password">
+
+                <div id="confirmWrap" style="display:none;">
+                    <label class="field-label" for="authConfirm">Confirm password</label>
+                    <input type="password" id="authConfirm" class="text-input" placeholder="Type it again" autocomplete="new-password">
+                </div>
+
+                <div class="auth-error" id="authError"></div>
+                <button type="submit" class="next-btn active" id="authSubmit">Sign in</button>
+            </form>
+
+            <p class="auth-note">
+                🔒 This app has no server. Your account and your entries are stored only in
+                <strong>this browser</strong> and never leave your device — which also means they
+                don't sync anywhere and anyone using this device can open them.
+                Please don't reuse an important password.
+            </p>
+        </div>
+
+        <!-- ============ PAGE 1: Selection ============ -->
         <div class="selection-page" id="selectionPage">
             <div class="emoji-header">✨</div>
             <h1>How are you feeling?</h1>
             <p class="subtitle">Select one or more emotions that match your current state</p>
-            
+
             <div class="bubbles-container" id="bubblesContainer"></div>
 
-            <!-- Custom emotion input -->
             <div class="custom-emotion-section">
                 <p class="custom-emotion-label">Can't find yours? Type it below 👇</p>
                 <div class="custom-emotion-row">
                     <input type="text" class="custom-emotion-input" id="customEmotionInput"
                            placeholder="e.g. Melancholic / เศร้า..." maxlength="40">
-                    <button class="add-emotion-btn" id="addEmotionBtn">+ Add</button>
+                    <button type="button" class="add-emotion-btn" id="addEmotionBtn">+ Add</button>
                 </div>
             </div>
 
             <div class="custom-added-container" id="customAddedContainer"></div>
-            
+
             <button class="regenerate-btn" id="regenerateBtn">🔄 Regenerate Emotions</button>
             <button class="next-btn" id="nextBtn">Continue →</button>
             <p class="page-indicator">PAGE 1 OF 7</p>
         </div>
 
-        <!-- PAGE 2: Input Page -->
+        <!-- ============ PAGE 2: Input ============ -->
         <div class="input-page" id="inputPage">
             <h1>Express Your Emotion</h1>
             <p class="subtitle">Type the emotion word to acknowledge how you feel</p>
-            
+
             <div class="selected-emotion-display" id="emotionDisplay"></div>
-            
+
             <p class="instruction">Type the emotion label above:</p>
             <input type="text" class="text-input" id="emotionInput" placeholder="Type here...">
-            
+
             <div class="feedback" id="feedback"></div>
-            
+
             <button class="back-btn" id="backBtn">← Back to Selection</button>
             <p class="page-indicator">PAGE 2 OF 7</p>
         </div>
 
-        <!-- PAGE 3: Breathing Page -->
+        <!-- ============ PAGE 3: Breathing ============ -->
         <div class="breathing-page" id="breathingPage">
             <h2 class="breathing-title">Let's take a deep breath for 30 seconds</h2>
-            
+
             <div class="countdown-circle">
                 <div class="countdown-number" id="countdownNumber">30</div>
             </div>
-            
+
             <p class="breathing-instruction">Breathe slowly and deeply...</p>
+            <p class="saved-toast" id="savedToast"></p>
             <p class="page-indicator">PAGE 3 OF 7</p>
         </div>
 
-        <!-- PAGE 4: Check-in Page -->
+        <!-- ============ PAGE 4: Check-in ============ -->
         <div class="checkin-page" id="checkinPage">
             <h2 class="checkin-title">How are you feeling now?</h2>
             <p class="checkin-subtitle">After taking a moment to breathe and acknowledge your emotions</p>
-            
+
             <div class="checkin-buttons">
                 <button class="feel-better-btn" id="feelBetterBtn">😊 Feel Better</button>
                 <button class="still-no-btn" id="stillNoBtn">😔 Still No</button>
@@ -761,7 +1281,7 @@
             <p class="page-indicator">PAGE 4 OF 7</p>
         </div>
 
-        <!-- PAGE 5: Congratulations Page -->
+        <!-- ============ PAGE 5: Congratulations ============ -->
         <div class="congrats-page" id="congratsPage">
             <div class="congrats-graphic">🎉</div>
             <h2 class="congrats-title">Congratulations!</h2>
@@ -769,10 +1289,11 @@
                 You've taken an important step in acknowledging and processing your emotions. Remember, it's okay to feel what you feel. Your peace-of-mind is the most important thing!
             </p>
             <button class="restart-btn" id="restartBtn">Start Over</button>
+            <button class="back-btn" id="congratsDashBtn">📊 See my dashboard</button>
             <p class="page-indicator">PAGE 5 OF 7</p>
         </div>
 
-        <!-- PAGE 6: Reflection Page (Still No path) -->
+        <!-- ============ PAGE 6: Reflection ============ -->
         <div class="reflect-page" id="reflectPage">
             <div class="emoji-header" style="font-size:36px; margin-bottom:12px;">💭</div>
             <h2 class="reflect-title">Let's reflect for a moment</h2>
@@ -789,7 +1310,7 @@
             <p class="page-indicator">PAGE 6 OF 7</p>
         </div>
 
-        <!-- PAGE 7: Emotion Bubble + Intensity Slider -->
+        <!-- ============ PAGE 7: Intensity ============ -->
         <div class="intensity-page" id="intensityPage">
             <h2 class="intensity-title">How intense is this feeling?</h2>
             <p class="intensity-subtitle">Slide to show how strongly you feel this right now</p>
@@ -810,345 +1331,1176 @@
             <p class="page-indicator">PAGE 7 OF 7</p>
         </div>
 
+        <!-- ============ DASHBOARD ============ -->
+        <div class="dash-page" id="dashPage">
+            <h1>Your Emotion Dashboard</h1>
+            <p class="subtitle" id="dashGreeting">How often each feeling actually shows up.</p>
+
+            <div class="period-tabs">
+                <button class="period-tab active" data-period="day">Daily</button>
+                <button class="period-tab" data-period="week">Weekly</button>
+                <button class="period-tab" data-period="month">Monthly</button>
+            </div>
+
+            <div class="dash-empty" id="dashEmpty" style="display:none;">
+                <div class="empty-emoji">🫧</div>
+                <p id="dashEmptyText">No check-ins in this window yet.<br>Do a check-in and your patterns will appear here.</p>
+                <button class="next-btn active" id="emptyCheckinBtn">Start a check-in →</button>
+                <div class="dash-footer" style="margin-top:14px;">
+                    <button class="link-btn" id="seedBtn">Fill with 30 days of sample data</button>
+                </div>
+            </div>
+
+            <div id="dashBody">
+                <div class="insight-bubble" id="insightBubble">
+                    <div class="insight-bubble-title">💡 Key insights</div>
+                    <ul class="insight-list" id="insightList"></ul>
+                    <div class="insight-takeaway" id="insightTakeaway"></div>
+                </div>
+
+                <div class="stat-row" id="statRow"></div>
+
+                <div class="dash-card">
+                    <h3>How often each emotion showed up</h3>
+                    <p class="card-hint" id="freqHint"></p>
+                    <div id="freqList"></div>
+                </div>
+
+                <div class="dash-card">
+                    <h3 id="timeChartTitle">When it showed up</h3>
+                    <p class="card-hint" id="timeChartHint"></p>
+                    <div class="time-chart" id="timeChart"></div>
+                </div>
+
+                <div class="dash-card">
+                    <h3>Emotional balance</h3>
+                    <p class="card-hint">Share of everything you logged in this window. There's no better
+                       or worse side here — noticing the mix is the whole point.</p>
+                    <div class="balance-bar" id="balanceBar"></div>
+                    <div class="balance-legend" id="balanceLegend"></div>
+                </div>
+            </div>
+
+            <button class="back-btn" id="dashBackBtn">← Back to check-in</button>
+            <div class="dash-footer">
+                <button class="link-btn danger" id="clearDataBtn">Delete all my data</button>
+            </div>
+        </div>
+
     </div>
+</div>
 
-    <script>
-        const emotions = [
-            'Happy', 'Sad', 'Angry', 'Anxious', 'Excited', 'Calm', 'Frustrated',
-            'Grateful', 'Lonely', 'Confident', 'Overwhelmed', 'Peaceful', 'Nervous',
-            'Joyful', 'Tired', 'Hopeful', 'Confused', 'Proud', 'Ashamed', 'Content',
-            'Afraid', 'Energetic', 'Bored', 'Curious', 'Jealous', 'Relieved',
-            'Stressed', 'Loved', 'Disappointed', 'Motivated'
-        ];
+<script>
+/* =========================================================================
+   0. EMOTION VOCABULARY
+   ========================================================================= */
+const emotions = [
+    'Happy', 'Sad', 'Angry', 'Anxious', 'Excited', 'Calm', 'Frustrated',
+    'Grateful', 'Lonely', 'Confident', 'Overwhelmed', 'Peaceful', 'Nervous',
+    'Joyful', 'Tired', 'Hopeful', 'Confused', 'Proud', 'Ashamed', 'Content',
+    'Afraid', 'Energetic', 'Bored', 'Curious', 'Jealous', 'Relieved',
+    'Stressed', 'Loved', 'Disappointed', 'Motivated'
+];
 
-        const intensityLabels = {
-            1: 'Barely noticeable',
-            2: 'Very mild',
-            3: 'Mild',
-            4: 'Somewhat present',
-            5: 'Moderate intensity',
-            6: 'Noticeably strong',
-            7: 'Quite intense',
-            8: 'Very intense',
-            9: 'Overwhelming',
-            10: 'Extremely intense'
-        };
+const POSITIVE = ['happy','excited','calm','grateful','confident','peaceful','joyful',
+                  'hopeful','proud','content','energetic','curious','relieved','loved','motivated'];
+const NEGATIVE = ['sad','angry','anxious','frustrated','lonely','overwhelmed','nervous',
+                  'tired','confused','ashamed','afraid','bored','jealous','stressed','disappointed'];
 
-        let selectedEmotions = [];
-        let customEmotions = [];
-        let currentEmotionIndex = 0;
-        let countdownInterval = null;
+function valence(name) {
+    const k = name.trim().toLowerCase();
+    if (POSITIVE.includes(k)) return 'pos';
+    if (NEGATIVE.includes(k)) return 'neg';
+    return 'neu';
+}
 
-        // Page elements
-        const selectionPage = document.getElementById('selectionPage');
-        const inputPage = document.getElementById('inputPage');
-        const breathingPage = document.getElementById('breathingPage');
-        const checkinPage = document.getElementById('checkinPage');
-        const congratsPage = document.getElementById('congratsPage');
-        const reflectPage = document.getElementById('reflectPage');
-        const intensityPage = document.getElementById('intensityPage');
+const intensityLabels = {
+    1: 'Barely noticeable', 2: 'Very mild', 3: 'Mild', 4: 'Somewhat present',
+    5: 'Moderate intensity', 6: 'Noticeably strong', 7: 'Quite intense',
+    8: 'Very intense', 9: 'Overwhelming', 10: 'Extremely intense'
+};
 
-        const bubblesContainer = document.getElementById('bubblesContainer');
-        const regenerateBtn = document.getElementById('regenerateBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const customEmotionInput = document.getElementById('customEmotionInput');
-        const addEmotionBtn = document.getElementById('addEmotionBtn');
-        const customAddedContainer = document.getElementById('customAddedContainer');
-
-        const emotionDisplay = document.getElementById('emotionDisplay');
-        const emotionInput = document.getElementById('emotionInput');
-        const feedback = document.getElementById('feedback');
-        const backBtn = document.getElementById('backBtn');
-        const countdownNumber = document.getElementById('countdownNumber');
-
-        const feelBetterBtn = document.getElementById('feelBetterBtn');
-        const stillNoBtn = document.getElementById('stillNoBtn');
-        const restartBtn = document.getElementById('restartBtn');
-
-        const reflectTextarea = document.getElementById('reflectTextarea');
-        const charCounter = document.getElementById('charCounter');
-        const shoutBtn = document.getElementById('shoutBtn');
-
-        const intensityBubblesDisplay = document.getElementById('intensityBubblesDisplay');
-        const intensitySlider = document.getElementById('intensitySlider');
-        const intensityValue = document.getElementById('intensityValue');
-        const intensityDesc = document.getElementById('intensityDesc');
-        const intensitySubmitBtn = document.getElementById('intensitySubmitBtn');
-
-        // =====================
-        // PAGE 1 LOGIC
-        // =====================
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
+/* =========================================================================
+   1. PASSWORD HASHING
+   PBKDF2 via Web Crypto when available (https / localhost). Falls back to a
+   salted, iterated pure-JS SHA-256 so the app still works from file://.
+   ========================================================================= */
+function sha256js(ascii) {
+    function rightRotate(value, amount) { return (value >>> amount) | (value << (32 - amount)); }
+    const mathPow = Math.pow, maxWord = mathPow(2, 32);
+    let i, j, result = '';
+    const words = [];
+    const asciiBitLength = ascii.length * 8;
+    let hash = sha256js.h = sha256js.h || [];
+    const k = sha256js.k = sha256js.k || [];
+    let primeCounter = k.length;
+    const isComposite = {};
+    for (let candidate = 2; primeCounter < 64; candidate++) {
+        if (!isComposite[candidate]) {
+            for (i = 0; i < 313; i += candidate) isComposite[i] = candidate;
+            hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+            k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
         }
-
-        function generateBubbles() {
-            const shuffled = shuffleArray(emotions);
-            const selected = shuffled.slice(0, 8);
-
-            bubblesContainer.innerHTML = '';
-
-            selected.forEach(emotion => {
-                const bubble = document.createElement('div');
-                bubble.className = 'bubble';
-                bubble.textContent = emotion;
-                if (selectedEmotions.includes(emotion)) bubble.classList.add('selected');
-                bubble.addEventListener('click', () => toggleBubble(bubble, emotion));
-                bubblesContainer.appendChild(bubble);
-            });
+    }
+    ascii += '\x80';
+    while (ascii.length % 64 - 56) ascii += '\x00';
+    for (i = 0; i < ascii.length; i++) {
+        j = ascii.charCodeAt(i);
+        if (j >> 8) return null;
+        words[i >> 2] |= j << ((3 - i) % 4) * 8;
+    }
+    words[words.length] = ((asciiBitLength / maxWord) | 0);
+    words[words.length] = (asciiBitLength);
+    for (j = 0; j < words.length;) {
+        const w = words.slice(j, j += 16);
+        const oldHash = hash;
+        hash = hash.slice(0, 8);
+        for (i = 0; i < 64; i++) {
+            const w15 = w[i - 15], w2 = w[i - 2];
+            const a = hash[0], e = hash[4];
+            const temp1 = hash[7]
+                + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                + ((e & hash[5]) ^ ((~e) & hash[6]))
+                + k[i]
+                + (w[i] = (i < 16) ? w[i] : (
+                    w[i - 16]
+                    + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+                    + w[i - 7]
+                    + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+                ) | 0);
+            const temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+            hash = [(temp1 + temp2) | 0].concat(hash);
+            hash[4] = (hash[4] + temp1) | 0;
         }
-
-        function toggleBubble(bubbleElement, emotion) {
-            if (bubbleElement.classList.contains('selected')) {
-                bubbleElement.classList.remove('selected');
-                selectedEmotions = selectedEmotions.filter(e => e !== emotion);
-            } else {
-                bubbleElement.classList.add('selected');
-                selectedEmotions.push(emotion);
-            }
-            updateNextButton();
+        for (i = 0; i < 8; i++) hash[i] = (hash[i] + oldHash[i]) | 0;
+    }
+    for (i = 0; i < 8; i++) {
+        for (j = 3; j + 1; j--) {
+            const b = (hash[i] >> (j * 8)) & 255;
+            result += ((b < 16) ? 0 : '') + b.toString(16);
         }
+    }
+    return result;
+}
 
-        function updateNextButton() {
-            const total = selectedEmotions.length + customEmotions.length;
-            nextBtn.classList.toggle('active', total > 0);
+function toByteString(str) {
+    // UTF-8 encode into a binary string so sha256js only sees byte values
+    return unescape(encodeURIComponent(str));
+}
+
+function bufToHex(buf) {
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function subtleAvailable() {
+    return typeof window.crypto !== 'undefined'
+        && window.crypto.subtle
+        && typeof window.crypto.subtle.importKey === 'function'
+        && typeof TextEncoder !== 'undefined';
+}
+
+function randomSalt() {
+    if (window.crypto && window.crypto.getRandomValues) {
+        const a = new Uint8Array(16);
+        window.crypto.getRandomValues(a);
+        return bufToHex(a.buffer);
+    }
+    let s = '';
+    for (let i = 0; i < 32; i++) s += Math.floor(Math.random() * 16).toString(16);
+    return s;
+}
+
+async function derive(password, salt, algo) {
+    if (algo === 'pbkdf2') {
+        const enc = new TextEncoder();
+        const key = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']);
+        const bits = await crypto.subtle.deriveBits(
+            { name: 'PBKDF2', salt: enc.encode(salt), iterations: 120000, hash: 'SHA-256' }, key, 256);
+        return 'pbkdf2$' + bufToHex(bits);
+    }
+    let h = sha256js(toByteString(salt + '|' + password));
+    for (let i = 0; i < 5000; i++) h = sha256js(h + salt);
+    return 'js$' + h;
+}
+
+async function hashPassword(password, salt) {
+    if (subtleAvailable()) {
+        try { return await derive(password, salt, 'pbkdf2'); } catch (e) { /* fall through */ }
+    }
+    return await derive(password, salt, 'js');
+}
+
+async function verifyPassword(password, user) {
+    const algo = user.hash.indexOf('pbkdf2$') === 0 ? 'pbkdf2' : 'js';
+    try {
+        return (await derive(password, user.salt, algo)) === user.hash;
+    } catch (e) {
+        return false;
+    }
+}
+
+/* =========================================================================
+   2. STORAGE
+   ========================================================================= */
+const KEY_USERS = 'eb_users';
+const KEY_SESSION = 'eb_session';
+const keyEntries = uid => 'eb_entries_' + uid;
+
+function readJSON(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) || fallback; }
+    catch (e) { return fallback; }
+}
+
+const DB = {
+    users: () => readJSON(KEY_USERS, []),
+    saveUsers: u => localStorage.setItem(KEY_USERS, JSON.stringify(u)),
+    findUser: email => DB.users().find(u => u.email === email.trim().toLowerCase()),
+    sessionUid: () => localStorage.getItem(KEY_SESSION),
+    setSession: uid => localStorage.setItem(KEY_SESSION, uid),
+    clearSession: () => localStorage.removeItem(KEY_SESSION),
+    entries: uid => readJSON(keyEntries(uid), []),
+    saveEntries: (uid, list) => localStorage.setItem(keyEntries(uid), JSON.stringify(list)),
+    addEntries: (uid, list) => {
+        const all = DB.entries(uid).concat(list);
+        DB.saveEntries(uid, all);
+        return all;
+    },
+    updateSession: (uid, sessionId, patch) => {
+        const all = DB.entries(uid).map(e => e.sessionId === sessionId ? Object.assign({}, e, patch) : e);
+        DB.saveEntries(uid, all);
+    }
+};
+
+let currentUser = null;
+
+/* =========================================================================
+   3. DATE HELPERS
+   ========================================================================= */
+function startOfDay(d) { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+function dayKey(ts) {
+    const d = new Date(ts);
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+const PERIOD_DAYS = { day: 1, week: 7, month: 30 };
+const PERIOD_WORD = { day: 'today', week: 'this week', month: 'this month' };
+
+function periodStart(period, offsetWindows) {
+    const days = PERIOD_DAYS[period];
+    const s = startOfDay(new Date());
+    s.setDate(s.getDate() - (days - 1) - (offsetWindows || 0) * days);
+    return s;
+}
+
+function entriesInWindow(all, period, offsetWindows) {
+    const start = periodStart(period, offsetWindows).getTime();
+    const end = periodStart(period, (offsetWindows || 0) - 1).getTime();
+    return all.filter(e => {
+        const t = new Date(e.ts).getTime();
+        return t >= start && (offsetWindows ? t < end : true);
+    });
+}
+
+/* =========================================================================
+   4. DOM REFERENCES
+   ========================================================================= */
+const appWrap = document.getElementById('appWrap');
+const topbar = document.getElementById('topbar');
+const topbarEmail = document.getElementById('topbarEmail');
+const avatarInitial = document.getElementById('avatarInitial');
+const navCheckin = document.getElementById('navCheckin');
+const navDash = document.getElementById('navDash');
+const signOutBtn = document.getElementById('signOutBtn');
+
+const authPage = document.getElementById('authPage');
+const authForm = document.getElementById('authForm');
+const authEmail = document.getElementById('authEmail');
+const authPassword = document.getElementById('authPassword');
+const authConfirm = document.getElementById('authConfirm');
+const confirmWrap = document.getElementById('confirmWrap');
+const authError = document.getElementById('authError');
+const authSubmit = document.getElementById('authSubmit');
+const tabSignin = document.getElementById('tabSignin');
+const tabSignup = document.getElementById('tabSignup');
+
+const selectionPage = document.getElementById('selectionPage');
+const inputPage = document.getElementById('inputPage');
+const breathingPage = document.getElementById('breathingPage');
+const checkinPage = document.getElementById('checkinPage');
+const congratsPage = document.getElementById('congratsPage');
+const reflectPage = document.getElementById('reflectPage');
+const intensityPage = document.getElementById('intensityPage');
+const dashPage = document.getElementById('dashPage');
+
+const bubblesContainer = document.getElementById('bubblesContainer');
+const regenerateBtn = document.getElementById('regenerateBtn');
+const nextBtn = document.getElementById('nextBtn');
+const customEmotionInput = document.getElementById('customEmotionInput');
+const addEmotionBtn = document.getElementById('addEmotionBtn');
+const customAddedContainer = document.getElementById('customAddedContainer');
+
+const emotionDisplay = document.getElementById('emotionDisplay');
+const emotionInput = document.getElementById('emotionInput');
+const feedback = document.getElementById('feedback');
+const backBtn = document.getElementById('backBtn');
+const countdownNumber = document.getElementById('countdownNumber');
+const savedToast = document.getElementById('savedToast');
+
+const feelBetterBtn = document.getElementById('feelBetterBtn');
+const stillNoBtn = document.getElementById('stillNoBtn');
+const restartBtn = document.getElementById('restartBtn');
+const congratsDashBtn = document.getElementById('congratsDashBtn');
+
+const reflectTextarea = document.getElementById('reflectTextarea');
+const charCounter = document.getElementById('charCounter');
+const shoutBtn = document.getElementById('shoutBtn');
+
+const intensityBubblesDisplay = document.getElementById('intensityBubblesDisplay');
+const intensitySlider = document.getElementById('intensitySlider');
+const intensityValue = document.getElementById('intensityValue');
+const intensityDesc = document.getElementById('intensityDesc');
+const intensitySubmitBtn = document.getElementById('intensitySubmitBtn');
+
+const dashEmpty = document.getElementById('dashEmpty');
+const dashBody = document.getElementById('dashBody');
+const dashGreeting = document.getElementById('dashGreeting');
+const insightList = document.getElementById('insightList');
+const insightTakeaway = document.getElementById('insightTakeaway');
+const statRow = document.getElementById('statRow');
+const freqList = document.getElementById('freqList');
+const freqHint = document.getElementById('freqHint');
+const timeChart = document.getElementById('timeChart');
+const timeChartTitle = document.getElementById('timeChartTitle');
+const timeChartHint = document.getElementById('timeChartHint');
+const balanceBar = document.getElementById('balanceBar');
+const balanceLegend = document.getElementById('balanceLegend');
+const dashBackBtn = document.getElementById('dashBackBtn');
+const emptyCheckinBtn = document.getElementById('emptyCheckinBtn');
+const seedBtn = document.getElementById('seedBtn');
+const clearDataBtn = document.getElementById('clearDataBtn');
+
+const ALL_PAGES = [authPage, selectionPage, inputPage, breathingPage, checkinPage,
+                   congratsPage, reflectPage, intensityPage, dashPage];
+
+function showOnly(page) {
+    ALL_PAGES.forEach(p => p.classList.remove('active'));
+    page.classList.add('active');
+    appWrap.classList.toggle('wide', page === dashPage);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function escapeHTML(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+/* =========================================================================
+   5. AUTH UI
+   ========================================================================= */
+let authMode = 'signin';
+
+function setAuthMode(mode) {
+    authMode = mode;
+    tabSignin.classList.toggle('active', mode === 'signin');
+    tabSignup.classList.toggle('active', mode === 'signup');
+    confirmWrap.style.display = mode === 'signup' ? 'block' : 'none';
+    authSubmit.textContent = mode === 'signup' ? 'Create account' : 'Sign in';
+    authPassword.setAttribute('autocomplete', mode === 'signup' ? 'new-password' : 'current-password');
+    authPassword.placeholder = mode === 'signup' ? 'At least 8 characters' : 'Your password';
+    authError.textContent = '';
+    authError.className = 'auth-error';
+}
+
+tabSignin.addEventListener('click', () => setAuthMode('signin'));
+tabSignup.addEventListener('click', () => setAuthMode('signup'));
+
+function showAuthError(msg, ok) {
+    authError.textContent = msg;
+    authError.className = 'auth-error' + (ok ? ' ok' : '');
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+authForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = authEmail.value.trim().toLowerCase();
+    const pw = authPassword.value;
+
+    if (!EMAIL_RE.test(email)) return showAuthError('Please enter a valid email address.');
+    if (!pw) return showAuthError('Please enter your password.');
+
+    authSubmit.disabled = true;
+    const original = authSubmit.textContent;
+    authSubmit.textContent = 'Working…';
+
+    try {
+        if (authMode === 'signup') {
+            if (pw.length < 8) return showAuthError('Password needs at least 8 characters.');
+            if (pw !== authConfirm.value) return showAuthError('The two passwords don\'t match.');
+            if (DB.findUser(email)) return showAuthError('That email already has an account here. Try signing in.');
+
+            const salt = randomSalt();
+            const hash = await hashPassword(pw, salt);
+            const user = {
+                id: 'u_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8),
+                email, salt, hash, createdAt: new Date().toISOString()
+            };
+            const users = DB.users();
+            users.push(user);
+            DB.saveUsers(users);
+            DB.setSession(user.id);
+            enterApp(user);
+        } else {
+            const user = DB.findUser(email);
+            if (!user) return showAuthError('No account with that email in this browser. Sign up first.');
+            const ok = await verifyPassword(pw, user);
+            if (!ok) return showAuthError('Wrong password. Try again.');
+            DB.setSession(user.id);
+            enterApp(user);
         }
+    } finally {
+        authSubmit.disabled = false;
+        authSubmit.textContent = original;
+    }
+});
 
-        // Custom emotion input
-        function addCustomEmotion() {
-            const val = customEmotionInput.value.trim();
-            if (!val) return;
-            if (customEmotions.includes(val) || selectedEmotions.includes(val)) {
-                customEmotionInput.value = '';
-                return;
-            }
+function enterApp(user) {
+    currentUser = user;
+    authPassword.value = '';
+    authConfirm.value = '';
+    authError.textContent = '';
+    topbar.classList.add('active');
+    topbarEmail.textContent = user.email;
+    avatarInitial.textContent = (user.email[0] || '?');
+    resetApp();
+    showOnly(selectionPage);
+}
 
-            customEmotions.push(val);
+function signOut() {
+    DB.clearSession();
+    currentUser = null;
+    topbar.classList.remove('active');
+    resetApp();
+    setAuthMode('signin');
+    showOnly(authPage);
+}
+
+signOutBtn.addEventListener('click', signOut);
+navCheckin.addEventListener('click', () => { resetApp(); showOnly(selectionPage); });
+navDash.addEventListener('click', () => openDashboard());
+
+/* =========================================================================
+   6. PAGE 1 — SELECTION
+   ========================================================================= */
+let selectedEmotions = [];
+let customEmotions = [];
+let currentEmotionIndex = 0;
+let countdownInterval = null;
+let currentSessionId = null;
+let sessionRecorded = false;
+
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
+
+function generateBubbles() {
+    const selected = shuffleArray(emotions).slice(0, 8);
+    bubblesContainer.innerHTML = '';
+    selected.forEach(emotion => {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.textContent = emotion;
+        if (selectedEmotions.includes(emotion)) bubble.classList.add('selected');
+        bubble.addEventListener('click', () => toggleBubble(bubble, emotion));
+        bubblesContainer.appendChild(bubble);
+    });
+}
+
+function toggleBubble(bubbleElement, emotion) {
+    if (bubbleElement.classList.contains('selected')) {
+        bubbleElement.classList.remove('selected');
+        selectedEmotions = selectedEmotions.filter(e => e !== emotion);
+    } else {
+        bubbleElement.classList.add('selected');
+        selectedEmotions.push(emotion);
+    }
+    updateNextButton();
+}
+
+function updateNextButton() {
+    nextBtn.classList.toggle('active', selectedEmotions.length + customEmotions.length > 0);
+}
+
+function addCustomEmotion() {
+    const val = customEmotionInput.value.trim();
+    if (!val) return;
+    if (customEmotions.includes(val) || selectedEmotions.includes(val)) {
+        customEmotionInput.value = '';
+        return;
+    }
+    customEmotions.push(val);
+    renderCustomTags();
+    customEmotionInput.value = '';
+    updateNextButton();
+}
+
+function renderCustomTags() {
+    customAddedContainer.innerHTML = '';
+    customEmotions.forEach((emo, idx) => {
+        const tag = document.createElement('span');
+        tag.className = 'custom-added-tag';
+        tag.innerHTML = escapeHTML(emo) + ' <span class="remove-tag">✕</span>';
+        tag.querySelector('.remove-tag').addEventListener('click', () => {
+            customEmotions.splice(idx, 1);
             renderCustomTags();
-            customEmotionInput.value = '';
             updateNextButton();
-        }
+        });
+        customAddedContainer.appendChild(tag);
+    });
+}
 
-        function renderCustomTags() {
-            customAddedContainer.innerHTML = '';
-            customEmotions.forEach((emo, idx) => {
-                const tag = document.createElement('span');
-                tag.className = 'custom-added-tag';
-                tag.innerHTML = `${emo} <span class="remove-tag" data-idx="${idx}">✕</span>`;
-                tag.querySelector('.remove-tag').addEventListener('click', () => {
-                    customEmotions.splice(idx, 1);
-                    renderCustomTags();
-                    updateNextButton();
-                });
-                customAddedContainer.appendChild(tag);
+addEmotionBtn.addEventListener('click', addCustomEmotion);
+customEmotionInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); addCustomEmotion(); } });
+regenerateBtn.addEventListener('click', generateBubbles);
+nextBtn.addEventListener('click', showInputPage);
+
+/* =========================================================================
+   7. PAGE 2 — TYPE TO ACKNOWLEDGE
+   ========================================================================= */
+function getAllSelectedEmotions() {
+    return [...selectedEmotions, ...customEmotions];
+}
+
+function showInputPage() {
+    const all = getAllSelectedEmotions();
+    if (all.length === 0) return;
+    currentEmotionIndex = 0;
+    currentSessionId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+    sessionRecorded = false;
+    showOnly(inputPage);
+    displayCurrentEmotion(all);
+}
+
+function displayCurrentEmotion(all) {
+    const allEmotions = all || getAllSelectedEmotions();
+    const emotion = allEmotions[currentEmotionIndex];
+    emotionDisplay.innerHTML = '<div class="emotion-label">' + escapeHTML(emotion) + '</div>';
+    emotionInput.value = '';
+    emotionInput.className = 'text-input';
+    feedback.textContent = '';
+    feedback.className = 'feedback';
+    emotionInput.focus();
+}
+
+function checkInput() {
+    const userInput = emotionInput.value.trim();
+    const allEmotions = getAllSelectedEmotions();
+    const currentEmotion = allEmotions[currentEmotionIndex];
+
+    if (userInput.toLowerCase() === currentEmotion.toLowerCase()) {
+        emotionInput.classList.remove('incorrect');
+        emotionInput.classList.add('correct');
+        feedback.textContent = '✓ Perfect! You\'ve acknowledged this emotion.';
+        feedback.className = 'feedback correct';
+
+        setTimeout(() => {
+            if (currentEmotionIndex < allEmotions.length - 1) {
+                currentEmotionIndex++;
+                displayCurrentEmotion(allEmotions);
+            } else {
+                showBreathingPage();
+            }
+        }, 1500);
+    } else if (userInput.length > 0) {
+        emotionInput.classList.remove('correct');
+        emotionInput.classList.add('incorrect');
+        feedback.textContent = 'Not quite. Try typing the exact word shown above.';
+        feedback.className = 'feedback incorrect';
+    }
+}
+
+emotionInput.addEventListener('input', checkInput);
+backBtn.addEventListener('click', () => { resetApp(); showOnly(selectionPage); });
+
+/* =========================================================================
+   8. RECORDING — this is where emotions + frequency get persisted
+   ========================================================================= */
+function recordCheckin() {
+    if (!currentUser || sessionRecorded) return;
+    const now = new Date().toISOString();
+    const rows = getAllSelectedEmotions().map(emo => ({
+        id: 'e_' + Math.random().toString(36).slice(2, 10),
+        sessionId: currentSessionId,
+        emotion: emo.trim(),
+        key: emo.trim().toLowerCase(),
+        ts: now,
+        intensity: null,
+        outcome: null,
+        reflection: null
+    }));
+    if (!rows.length) return;
+    DB.addEntries(currentUser.id, rows);
+    sessionRecorded = true;
+
+    savedToast.textContent = '✓ Saved ' + rows.length + ' ' + (rows.length === 1 ? 'feeling' : 'feelings') + ' to your dashboard';
+    setTimeout(() => { savedToast.textContent = ''; }, 4000);
+}
+
+function patchCurrentSession(patch) {
+    if (!currentUser || !currentSessionId || !sessionRecorded) return;
+    DB.updateSession(currentUser.id, currentSessionId, patch);
+}
+
+/* =========================================================================
+   9. PAGE 3 — BREATHING
+   ========================================================================= */
+function showBreathingPage() {
+    recordCheckin();
+    showOnly(breathingPage);
+    startCountdown();
+}
+
+function startCountdown() {
+    if (countdownInterval) clearInterval(countdownInterval);
+    let seconds = 30;
+    countdownNumber.textContent = seconds;
+    countdownInterval = setInterval(() => {
+        seconds--;
+        countdownNumber.textContent = seconds;
+        if (seconds <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            showOnly(checkinPage);
+        }
+    }, 1000);
+}
+
+/* =========================================================================
+   10. PAGE 4/5/6/7
+   ========================================================================= */
+feelBetterBtn.addEventListener('click', () => {
+    patchCurrentSession({ outcome: 'better' });
+    showOnly(congratsPage);
+});
+
+stillNoBtn.addEventListener('click', () => {
+    patchCurrentSession({ outcome: 'still' });
+    showReflectPage();
+});
+
+restartBtn.addEventListener('click', () => { resetApp(); showOnly(selectionPage); });
+congratsDashBtn.addEventListener('click', () => openDashboard());
+
+function showReflectPage() {
+    reflectTextarea.value = '';
+    charCounter.textContent = '0 / 300';
+    charCounter.className = 'char-counter';
+    shoutBtn.classList.remove('active');
+    showOnly(reflectPage);
+}
+
+reflectTextarea.addEventListener('input', () => {
+    const len = reflectTextarea.value.length;
+    charCounter.textContent = len + ' / 300';
+    charCounter.className = 'char-counter' + (len >= 300 ? ' at-limit' : len >= 250 ? ' near-limit' : '');
+    shoutBtn.classList.toggle('active', len > 0);
+});
+
+shoutBtn.addEventListener('click', () => {
+    if (reflectTextarea.value.trim().length === 0) return;
+    patchCurrentSession({ reflection: reflectTextarea.value.trim() });
+    showIntensityPage();
+});
+
+function showIntensityPage() {
+    intensityBubblesDisplay.innerHTML = '';
+    getAllSelectedEmotions().forEach(emo => {
+        const bubble = document.createElement('div');
+        bubble.className = 'emotion-bubble-display';
+        bubble.textContent = emo;
+        intensityBubblesDisplay.appendChild(bubble);
+    });
+    intensitySlider.value = 5;
+    intensityValue.textContent = '5';
+    intensityDesc.textContent = intensityLabels[5];
+    showOnly(intensityPage);
+}
+
+intensitySlider.addEventListener('input', () => {
+    const val = parseInt(intensitySlider.value, 10);
+    intensityValue.textContent = val;
+    intensityDesc.textContent = intensityLabels[val];
+});
+
+intensitySubmitBtn.addEventListener('click', () => {
+    patchCurrentSession({ intensity: parseInt(intensitySlider.value, 10) });
+    showOnly(breathingPage);
+    startCountdown();
+});
+
+/* =========================================================================
+   11. RESET
+   ========================================================================= */
+function resetApp() {
+    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+    selectedEmotions = [];
+    customEmotions = [];
+    currentEmotionIndex = 0;
+    currentSessionId = null;
+    sessionRecorded = false;
+    customAddedContainer.innerHTML = '';
+    savedToast.textContent = '';
+    nextBtn.classList.remove('active');
+    generateBubbles();
+}
+
+/* =========================================================================
+   12. DASHBOARD — aggregation
+   ========================================================================= */
+let dashPeriod = 'day';
+
+function aggregate(rows) {
+    const map = new Map();
+    rows.forEach(r => {
+        const k = r.key || r.emotion.toLowerCase();
+        if (!map.has(k)) {
+            map.set(k, { key: k, label: r.emotion, count: 0, days: new Set(), intensities: [], hours: [] });
+        }
+        const g = map.get(k);
+        g.count++;
+        g.days.add(dayKey(r.ts));
+        if (typeof r.intensity === 'number') g.intensities.push(r.intensity);
+        g.hours.push(new Date(r.ts).getHours());
+    });
+    return Array.from(map.values())
+        .map(g => ({
+            key: g.key,
+            label: g.label,
+            count: g.count,
+            dayCount: g.days.size,
+            avgIntensity: g.intensities.length
+                ? g.intensities.reduce((a, b) => a + b, 0) / g.intensities.length : null,
+            morning: g.hours.filter(h => h < 12).length,
+            evening: g.hours.filter(h => h >= 17).length,
+            valence: valence(g.label)
+        }))
+        .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+}
+
+function pct(n, d) { return d ? Math.round((n / d) * 100) : 0; }
+
+/* Largest-remainder rounding so displayed percentages always sum to 100 */
+function pctSplit(counts, total) {
+    const keys = Object.keys(counts);
+    if (!total) { const z = {}; keys.forEach(k => z[k] = 0); return z; }
+    const exact = keys.map(k => ({ k, v: (counts[k] / total) * 100 }));
+    const out = {};
+    let used = 0;
+    exact.forEach(e => { out[e.k] = Math.floor(e.v); used += out[e.k]; });
+    exact.sort((a, b) => (b.v - Math.floor(b.v)) - (a.v - Math.floor(a.v)));
+    for (let i = 0; used < 100 && i < exact.length; i++, used++) out[exact[i].k]++;
+    return out;
+}
+function plural(n, w) { return n + ' ' + w + (n === 1 ? '' : 's'); }
+function times(n) { return n === 1 ? 'once' : n === 2 ? 'twice' : n + ' times'; }
+
+/* ---- Insight generation ---- */
+function buildInsights(rows, prevRows, period) {
+    const out = [];
+    const days = PERIOD_DAYS[period];
+    const word = PERIOD_WORD[period];
+    const agg = aggregate(rows);
+    const total = rows.length;
+    const sessions = new Set(rows.map(r => r.sessionId));
+    const nSessions = sessions.size;
+    const activeDays = new Set(rows.map(r => dayKey(r.ts))).size;
+
+    const negatives = agg.filter(a => a.valence === 'neg');
+    const positives = agg.filter(a => a.valence === 'pos');
+
+    // 1. The core reframe: a hard feeling is a set of moments, not the whole period
+    const topNeg = negatives[0];
+    if (topNeg) {
+        if (period === 'day') {
+            out.push({
+                icon: '🌤️',
+                html: topNeg.count === 1
+                    ? 'You felt <strong>' + escapeHTML(topNeg.label) + '</strong> once today — a single moment you noticed, not the whole day.'
+                    : 'You felt <strong>' + escapeHTML(topNeg.label) + '</strong> ' + times(topNeg.count) +
+                      ' today — ' + topNeg.count + ' separate moments across ' + plural(nSessions, 'check-in') +
+                      ' (' + pct(topNeg.count, total) + '% of what you logged), not the whole day.'
+            });
+        } else {
+            const quiet = days - topNeg.dayCount;
+            out.push({
+                icon: '🌤️',
+                html: '<strong>' + escapeHTML(topNeg.label) + '</strong> showed up ' + times(topNeg.count) +
+                      ' ' + word + ', spread across ' + plural(topNeg.dayCount, 'day') + '. On the other ' +
+                      plural(quiet, 'day') + ' you didn\'t log it at all.'
             });
         }
+    }
 
-        addEmotionBtn.addEventListener('click', addCustomEmotion);
-        customEmotionInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') addCustomEmotion();
+    // 2. Most frequent feeling overall + a rate
+    const top = agg[0];
+    if (top) {
+        let phrase;
+        if (period === 'day') {
+            phrase = times(top.count) + ' today';
+        } else if (top.count >= days) {
+            phrase = times(top.count) + ' ' + word + ', about ' + (top.count / days).toFixed(1) + '× a day';
+        } else {
+            phrase = times(top.count) + ' ' + word + ', roughly once every ' +
+                     Math.round(days / top.count) + ' days';
+        }
+        out.push({
+            icon: '📌',
+            html: 'Your most frequent feeling is <strong>' + escapeHTML(top.label) + '</strong> — ' + phrase + '.'
         });
+    }
 
-        regenerateBtn.addEventListener('click', generateBubbles);
-        nextBtn.addEventListener('click', showInputPage);
-
-        // =====================
-        // PAGE 2 LOGIC
-        // =====================
-        function getAllSelectedEmotions() {
-            return [...selectedEmotions, ...customEmotions];
-        }
-
-        function showInputPage() {
-            const all = getAllSelectedEmotions();
-            if (all.length === 0) return;
-            currentEmotionIndex = 0;
-            selectionPage.classList.add('hidden');
-            inputPage.classList.add('active');
-            displayCurrentEmotion(all);
-        }
-
-        function displayCurrentEmotion(all) {
-            const allEmotions = all || getAllSelectedEmotions();
-            const emotion = allEmotions[currentEmotionIndex];
-            emotionDisplay.innerHTML = `<div class="emotion-label">${emotion}</div>`;
-            emotionInput.value = '';
-            emotionInput.className = 'text-input';
-            feedback.textContent = '';
-            feedback.className = 'feedback';
-            emotionInput.focus();
-        }
-
-        function checkInput() {
-            const userInput = emotionInput.value.trim();
-            const allEmotions = getAllSelectedEmotions();
-            const currentEmotion = allEmotions[currentEmotionIndex];
-
-            if (userInput.toLowerCase() === currentEmotion.toLowerCase()) {
-                emotionInput.classList.remove('incorrect');
-                emotionInput.classList.add('correct');
-                feedback.textContent = '✓ Perfect! You\'ve acknowledged this emotion.';
-                feedback.className = 'feedback correct';
-
-                setTimeout(() => {
-                    if (currentEmotionIndex < allEmotions.length - 1) {
-                        currentEmotionIndex++;
-                        displayCurrentEmotion(allEmotions);
-                    } else {
-                        showBreathingPage();
-                    }
-                }, 1500);
-            } else if (userInput.length > 0) {
-                emotionInput.classList.remove('correct');
-                emotionInput.classList.add('incorrect');
-                feedback.textContent = 'Not quite. Try typing the exact word shown above.';
-                feedback.className = 'feedback incorrect';
+    // 3. Trend vs the previous equal-length window
+    if (period !== 'day' && prevRows.length) {
+        const prevAgg = aggregate(prevRows);
+        let best = null;
+        agg.forEach(a => {
+            const p = prevAgg.find(x => x.key === a.key);
+            if (!p) return;
+            const delta = a.count - p.count;
+            if (Math.abs(delta) >= 2 && (!best || Math.abs(delta) > Math.abs(best.delta))) {
+                best = { a, p, delta };
             }
-        }
-
-        emotionInput.addEventListener('input', checkInput);
-        backBtn.addEventListener('click', resetApp);
-
-        // =====================
-        // PAGE 3 LOGIC
-        // =====================
-        function showBreathingPage() {
-            inputPage.classList.remove('active');
-            breathingPage.classList.add('active');
-            startCountdown();
-        }
-
-        function startCountdown() {
-            if (countdownInterval) clearInterval(countdownInterval);
-            let seconds = 30;
-            countdownNumber.textContent = seconds;
-
-            countdownInterval = setInterval(() => {
-                seconds--;
-                countdownNumber.textContent = seconds;
-                if (seconds <= 0) {
-                    clearInterval(countdownInterval);
-                    countdownInterval = null;
-                    showCheckinPage();
-                }
-            }, 1000);
-        }
-
-        // =====================
-        // PAGE 4 LOGIC
-        // =====================
-        function showCheckinPage() {
-            breathingPage.classList.remove('active');
-            checkinPage.classList.add('active');
-        }
-
-        feelBetterBtn.addEventListener('click', () => {
-            checkinPage.classList.remove('active');
-            congratsPage.classList.add('active');
         });
-
-        stillNoBtn.addEventListener('click', () => {
-            checkinPage.classList.remove('active');
-            showReflectPage();
-        });
-
-        // =====================
-        // PAGE 5: Congrats
-        // =====================
-        restartBtn.addEventListener('click', resetApp);
-
-        // =====================
-        // PAGE 6 LOGIC: Reflection
-        // =====================
-        function showReflectPage() {
-            reflectTextarea.value = '';
-            charCounter.textContent = '0 / 300';
-            charCounter.className = 'char-counter';
-            shoutBtn.classList.remove('active');
-            reflectPage.classList.add('active');
-        }
-
-        reflectTextarea.addEventListener('input', () => {
-            const len = reflectTextarea.value.length;
-            charCounter.textContent = `${len} / 300`;
-            charCounter.className = 'char-counter' +
-                (len >= 300 ? ' at-limit' : len >= 250 ? ' near-limit' : '');
-            shoutBtn.classList.toggle('active', len > 0);
-        });
-
-        shoutBtn.addEventListener('click', () => {
-            if (reflectTextarea.value.trim().length === 0) return;
-            reflectPage.classList.remove('active');
-            showIntensityPage();
-        });
-
-        // =====================
-        // PAGE 7 LOGIC: Intensity Slider
-        // =====================
-        function showIntensityPage() {
-            // Show all selected emotions as bubbles
-            intensityBubblesDisplay.innerHTML = '';
-            getAllSelectedEmotions().forEach(emo => {
-                const bubble = document.createElement('div');
-                bubble.className = 'emotion-bubble-display';
-                bubble.textContent = emo;
-                intensityBubblesDisplay.appendChild(bubble);
+        if (best) {
+            const easing = best.delta < 0;
+            const good = (best.a.valence === 'neg') === easing;
+            out.push({
+                icon: good ? '📉' : '📈',
+                html: '<strong>' + escapeHTML(best.a.label) + '</strong> is ' + (easing ? 'down' : 'up') +
+                      ' — ' + best.a.count + ' ' + word + ' vs ' + best.p.count + ' the ' +
+                      (period === 'week' ? 'week' : 'month') + ' before.'
             });
-
-            // Reset slider
-            intensitySlider.value = 5;
-            intensityValue.textContent = '5';
-            intensityDesc.textContent = intensityLabels[5];
-
-            intensityPage.classList.add('active');
         }
+    }
 
-        intensitySlider.addEventListener('input', () => {
-            const val = parseInt(intensitySlider.value);
-            intensityValue.textContent = val;
-            intensityDesc.textContent = intensityLabels[val];
+    // 4. Balance
+    if (total >= 3) {
+        const counts = { pos: 0, neg: 0, neu: 0 };
+        rows.forEach(r => counts[valence(r.emotion)]++);
+        const share = pctSplit(counts, total);
+        out.push({
+            icon: '⚖️',
+            html: 'Pleasant feelings were <strong>' + share.pos + '%</strong> of what you logged ' +
+                  word + ' (' + counts.pos + ' of ' + total + '), unpleasant ones <strong>' +
+                  share.neg + '%</strong>. Both are just information.'
         });
+    }
 
-        intensitySubmitBtn.addEventListener('click', () => {
-            intensityPage.classList.remove('active');
-            // Go to Page 3 (breathing countdown)
-            breathingPage.classList.add('active');
-            startCountdown();
+    // 5. Time-of-day clustering
+    const clustered = agg.find(a => a.count >= 3 && (a.morning / a.count >= 0.6 || a.evening / a.count >= 0.6));
+    if (clustered) {
+        const isMorning = clustered.morning / clustered.count >= 0.6;
+        const n = isMorning ? clustered.morning : clustered.evening;
+        out.push({
+            icon: isMorning ? '🌅' : '🌙',
+            html: '<strong>' + escapeHTML(clustered.label) + '</strong> clusters in the ' +
+                  (isMorning ? 'morning' : 'evening') + ' — ' + n + ' of its ' + clustered.count +
+                  ' check-ins were ' + (isMorning ? 'before noon' : 'after 5pm') + '.'
         });
+    }
 
-        // =====================
-        // RESET
-        // =====================
-        function resetApp() {
-            if (countdownInterval) {
-                clearInterval(countdownInterval);
-                countdownInterval = null;
-            }
+    // 6. Intensity
+    const rated = agg.filter(a => a.avgIntensity !== null).sort((a, b) => b.avgIntensity - a.avgIntensity);
+    if (rated.length >= 2) {
+        out.push({
+            icon: '🔥',
+            html: '<strong>' + escapeHTML(rated[0].label) + '</strong> hits hardest (avg intensity ' +
+                  rated[0].avgIntensity.toFixed(1) + '/10), while <strong>' +
+                  escapeHTML(rated[rated.length - 1].label) + '</strong> sits at ' +
+                  rated[rated.length - 1].avgIntensity.toFixed(1) + '.'
+        });
+    } else if (rated.length === 1) {
+        out.push({
+            icon: '🔥',
+            html: 'When you rated it, <strong>' + escapeHTML(rated[0].label) + '</strong> averaged ' +
+                  rated[0].avgIntensity.toFixed(1) + '/10 in intensity.'
+        });
+    }
 
-            selectedEmotions = [];
-            customEmotions = [];
-            currentEmotionIndex = 0;
+    // 7. Did breathing help?
+    const outcomes = {};
+    rows.forEach(r => { if (r.outcome) outcomes[r.sessionId] = r.outcome; });
+    const list = Object.values(outcomes);
+    if (list.length >= 3) {
+        const better = list.filter(o => o === 'better').length;
+        out.push({
+            icon: '🫁',
+            html: 'After breathing you felt better in <strong>' + better + ' of ' + list.length +
+                  '</strong> sessions (' + pct(better, list.length) + '%).'
+        });
+    }
 
-            selectionPage.classList.remove('hidden');
-            inputPage.classList.remove('active');
-            breathingPage.classList.remove('active');
-            checkinPage.classList.remove('active');
-            congratsPage.classList.remove('active');
-            reflectPage.classList.remove('active');
-            intensityPage.classList.remove('active');
+    // 8. Consistency
+    if (period !== 'day') {
+        out.push({
+            icon: '📅',
+            html: 'You checked in on <strong>' + activeDays + ' of the last ' + days + ' days</strong>' +
+                  (activeDays === days ? ' — every single one.' : '.')
+        });
+    }
 
-            customAddedContainer.innerHTML = '';
-            nextBtn.classList.remove('active');
-            generateBubbles();
+    return out.slice(0, 5);
+}
+
+function buildTakeaway(rows, period) {
+    const agg = aggregate(rows);
+    const negatives = agg.filter(a => a.valence === 'neg');
+    const total = rows.length;
+    if (!total) return '';
+    const topNeg = negatives[0];
+    if (topNeg && period === 'day') {
+        return topNeg.count === 1
+            ? 'Awareness note: you logged ' + topNeg.label.toLowerCase() + ' once today, not all day. ' +
+              'Naming when a feeling starts and stops is what makes it feel smaller.'
+            : 'Awareness note: a feeling that seems like "all day" was actually ' + times(topNeg.count) +
+              '. Naming when it starts and stops is what makes it feel smaller.';
+    }
+    if (topNeg) {
+        return 'Awareness note: ' + topNeg.label.toLowerCase() + ' isn\'t constant — it has a rhythm. ' +
+               'Notice what was happening on the days it appeared, and on the days it didn\'t.';
+    }
+    return 'Awareness note: most of what you logged was pleasant. Worth noticing what you were doing on those days.';
+}
+
+/* ---- Rendering ---- */
+function renderStats(rows, period) {
+    const nSessions = new Set(rows.map(r => r.sessionId)).size;
+    const nEmotions = new Set(rows.map(r => r.key || r.emotion.toLowerCase())).size;
+    const activeDays = new Set(rows.map(r => dayKey(r.ts))).size;
+    const outcomes = {};
+    rows.forEach(r => { if (r.outcome) outcomes[r.sessionId] = r.outcome; });
+    const list = Object.values(outcomes);
+    const relief = list.length ? pct(list.filter(o => o === 'better').length, list.length) + '%' : '—';
+
+    const tiles = [
+        { v: nSessions, l: 'CHECK-INS' },
+        { v: rows.length, l: 'FEELINGS LOGGED' },
+        { v: nEmotions, l: 'DIFFERENT EMOTIONS' },
+        period === 'day' ? { v: relief, l: 'FELT BETTER' } : { v: activeDays + '/' + PERIOD_DAYS[period], l: 'DAYS ACTIVE' }
+    ];
+
+    statRow.innerHTML = tiles.map(t =>
+        '<div class="stat-tile"><div class="stat-value">' + t.v + '</div><div class="stat-label">' + t.l + '</div></div>'
+    ).join('');
+}
+
+function renderFrequency(rows, period) {
+    const agg = aggregate(rows);
+    const total = rows.length;
+    const max = agg.length ? agg[0].count : 1;
+    const days = PERIOD_DAYS[period];
+
+    freqHint.textContent = period === 'day'
+        ? 'Out of ' + plural(total, 'feeling') + ' logged today.'
+        : 'Out of ' + plural(total, 'feeling') + ' logged over ' + days + ' days.';
+
+    freqList.innerHTML = agg.map(a => {
+        const meta = [];
+        meta.push(pct(a.count, total) + '% of what you logged');
+        if (period !== 'day') {
+            meta.push('on ' + a.dayCount + ' of ' + days + ' days');
+            if (a.count >= days) meta.push((a.count / days).toFixed(1) + '× per day');
+            else meta.push('~1× every ' + Math.round(days / a.count) + ' days');
         }
+        if (a.avgIntensity !== null) meta.push('avg intensity ' + a.avgIntensity.toFixed(1) + '/10');
 
-        // Init
-        generateBubbles();
-    </script>
+        return '<div class="freq-row">' +
+            '<div class="freq-head"><span class="freq-name">' + escapeHTML(a.label) + '</span>' +
+            '<span class="freq-count">' + a.count + '×</span></div>' +
+            '<div class="freq-track"><div class="freq-fill ' + a.valence + '" style="width:' +
+            Math.max(4, Math.round((a.count / max) * 100)) + '%"></div></div>' +
+            '<div class="freq-meta">' + meta.join(' · ') + '</div>' +
+            '</div>';
+    }).join('');
+}
+
+function renderTimeChart(rows, period) {
+    let buckets = [];
+
+    if (period === 'day') {
+        timeChartTitle.textContent = 'When today';
+        timeChartHint.textContent = 'Feelings logged in each part of the day.';
+        const labels = ['12–4a', '4–8a', '8–12p', '12–4p', '4–8p', '8–12a'];
+        buckets = labels.map((l, i) => ({ label: l, count: 0 }));
+        rows.forEach(r => { buckets[Math.floor(new Date(r.ts).getHours() / 4)].count++; });
+    } else {
+        const days = PERIOD_DAYS[period];
+        timeChartTitle.textContent = 'Day by day';
+        timeChartHint.textContent = 'Feelings logged on each of the last ' + days + ' days.';
+        const counts = {};
+        rows.forEach(r => { const k = dayKey(r.ts); counts[k] = (counts[k] || 0) + 1; });
+        const dNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        for (let i = days - 1; i >= 0; i--) {
+            const d = startOfDay(new Date());
+            d.setDate(d.getDate() - i);
+            const k = dayKey(d);
+            buckets.push({
+                label: days === 7 ? dNames[d.getDay()] : (d.getDate() === 1 || i === days - 1 || d.getDate() % 5 === 0 ? String(d.getDate()) : ''),
+                count: counts[k] || 0
+            });
+        }
+    }
+
+    const max = Math.max(1, ...buckets.map(b => b.count));
+    timeChart.innerHTML = buckets.map(b =>
+        '<div class="tc-col">' +
+            '<div class="tc-num">' + (b.count || '') + '</div>' +
+            '<div class="tc-bar-wrap"><div class="tc-bar' + (b.count ? '' : ' empty') +
+                '" style="height:' + (b.count ? Math.max(6, (b.count / max) * 100) : 3) + '%"></div></div>' +
+            '<div class="tc-label">' + b.label + '</div>' +
+        '</div>'
+    ).join('');
+}
+
+function renderBalance(rows) {
+    const total = rows.length;
+    const counts = { pos: 0, neg: 0, neu: 0 };
+    rows.forEach(r => counts[valence(r.emotion)]++);
+    const share = pctSplit(counts, total);
+    const order = [['pos', 'Pleasant'], ['neg', 'Unpleasant'], ['neu', 'Other']];
+
+    balanceBar.innerHTML = order.map(([k]) =>
+        share[k] > 0
+            ? '<div class="balance-seg ' + k + '" style="width:' + share[k] + '%">' +
+              (share[k] >= 12 ? share[k] + '%' : '') + '</div>'
+            : ''
+    ).join('');
+
+    balanceLegend.innerHTML = order.map(([k, name]) =>
+        '<span class="legend-item"><span class="legend-dot ' + k + '"></span>' + name + ' · ' +
+        counts[k] + ' (' + share[k] + '%)</span>'
+    ).join('');
+}
+
+function renderDashboard() {
+    if (!currentUser) return;
+    const all = DB.entries(currentUser.id);
+    const rows = entriesInWindow(all, dashPeriod, 0);
+    const prevRows = entriesInWindow(all, dashPeriod, 1);
+
+    dashGreeting.textContent = dashPeriod === 'day'
+        ? 'Today — how often each feeling actually showed up.'
+        : dashPeriod === 'week'
+            ? 'Last 7 days — how often each feeling actually showed up.'
+            : 'Last 30 days — how often each feeling actually showed up.';
+
+    if (!rows.length) {
+        dashEmpty.style.display = 'block';
+        dashBody.style.display = 'none';
+        document.getElementById('dashEmptyText').innerHTML = all.length
+            ? 'Nothing logged in this window yet.<br>Try the Weekly or Monthly view, or do a check-in.'
+            : 'No check-ins yet.<br>Finish one check-in and your patterns will start appearing here.';
+        seedBtn.style.display = all.length ? 'none' : 'inline-block';
+        return;
+    }
+
+    dashEmpty.style.display = 'none';
+    dashBody.style.display = 'block';
+
+    const insights = buildInsights(rows, prevRows, dashPeriod);
+    insightList.innerHTML = insights.map(i =>
+        '<li><span class="insight-icon">' + i.icon + '</span><span>' + i.html + '</span></li>'
+    ).join('');
+    insightTakeaway.textContent = buildTakeaway(rows, dashPeriod);
+
+    renderStats(rows, dashPeriod);
+    renderFrequency(rows, dashPeriod);
+    renderTimeChart(rows, dashPeriod);
+    renderBalance(rows);
+}
+
+function openDashboard() {
+    if (!currentUser) return;
+    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+    showOnly(dashPage);
+    renderDashboard();
+}
+
+document.querySelectorAll('.period-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        dashPeriod = tab.dataset.period;
+        renderDashboard();
+    });
+});
+
+dashBackBtn.addEventListener('click', () => { resetApp(); showOnly(selectionPage); });
+emptyCheckinBtn.addEventListener('click', () => { resetApp(); showOnly(selectionPage); });
+
+clearDataBtn.addEventListener('click', () => {
+    if (!currentUser) return;
+    if (!confirm('Delete every emotion entry for ' + currentUser.email + '? This cannot be undone.')) return;
+    DB.saveEntries(currentUser.id, []);
+    renderDashboard();
+});
+
+/* ---- Sample data so the dashboard can be explored immediately ---- */
+seedBtn.addEventListener('click', () => {
+    if (!currentUser) return;
+    if (!confirm('Add 30 days of made-up sample entries so you can see how the dashboard works?')) return;
+
+    const pool = ['Anxious', 'Sad', 'Tired', 'Happy', 'Grateful', 'Lonely', 'Stressed',
+                  'Calm', 'Hopeful', 'Frustrated', 'Content', 'Overwhelmed'];
+    const rows = [];
+    for (let d = 29; d >= 0; d--) {
+        const nSessions = Math.floor(Math.random() * 3);       // 0–2 check-ins a day
+        for (let s = 0; s < nSessions; s++) {
+            const when = new Date();
+            when.setDate(when.getDate() - d);
+            when.setHours(7 + Math.floor(Math.random() * 14), Math.floor(Math.random() * 60), 0, 0);
+            if (when > new Date()) continue;
+            const sid = 'seed_' + d + '_' + s;
+            const outcome = Math.random() < 0.68 ? 'better' : 'still';
+            const n = 1 + Math.floor(Math.random() * 2);
+            const picked = shuffleArray(pool).slice(0, n);
+            picked.forEach(emo => rows.push({
+                id: 'e_' + Math.random().toString(36).slice(2, 10),
+                sessionId: sid,
+                emotion: emo,
+                key: emo.toLowerCase(),
+                ts: when.toISOString(),
+                intensity: outcome === 'still' ? 3 + Math.floor(Math.random() * 7) : null,
+                outcome,
+                reflection: null
+            }));
+        }
+    }
+    DB.addEntries(currentUser.id, rows);
+    renderDashboard();
+});
+
+/* =========================================================================
+   13. BOOT
+   ========================================================================= */
+(function init() {
+    setAuthMode('signin');
+    generateBubbles();
+
+    const uid = DB.sessionUid();
+    const user = uid ? DB.users().find(u => u.id === uid) : null;
+    if (user) {
+        enterApp(user);
+    } else {
+        DB.clearSession();
+        showOnly(authPage);
+    }
+})();
+</script>
 </body>
 </html>
